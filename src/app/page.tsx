@@ -1,3 +1,3 @@
 export default function Home() {
-  return <div></div>;
+  return <div>index 페이지</div>;
 }
