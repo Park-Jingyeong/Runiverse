@@ -10,7 +10,7 @@ export default function SearchBar() {
     setSearch(e.target.value);
   };
   const onSubmit = () => {
-    if(!search) return;
+    if (!search) return;
     router.push(`/search?q=${search}`);
   };
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
