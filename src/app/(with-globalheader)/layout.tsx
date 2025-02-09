@@ -6,10 +6,11 @@ const pridi = Pridi({
   weight: "700",
   subsets: ["latin"],
 });
+
 export default function Layout({ children }: { children: ReactNode }) {
   return (
     <>
-      <header>
+      <header className="border-b-2 p-3">
         <Link href={"/"}>
           <h1 className={`${pridi.className} text-5xl`}>Runiverse</h1>
         </Link>
