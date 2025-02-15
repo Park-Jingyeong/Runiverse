@@ -1,5 +1,11 @@
 import { db } from "@/lib/firebase";
-import { doc, getDoc, addDoc, Timestamp, collection } from "firebase/firestore";
+import {
+  doc,
+  getDocs,
+  addDoc,
+  Timestamp,
+  collection,
+} from "firebase/firestore";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
@@ -24,5 +30,19 @@ export async function POST(req: Request) {
   } catch (error) {
     console.error("코스 등록 에러:", error);
     return NextResponse.json({ error: "코스 등록 실패" }, { status: 500 });
+  }
+}
+
+export async function GET() {
+  try {
+    const querySnapshot = await getDocs(collection(db, "courses"));
+    const courses = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    return NextResponse.json(courses);
+  } catch (error) {
+    console.error("코드 데이터 불러오기 에러", error);
+    return NextResponse.json({ error: "코스 불러오기 실패" }, { status: 500 });
   }
 }
