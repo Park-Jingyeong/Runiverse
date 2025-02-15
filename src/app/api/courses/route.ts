@@ -1,37 +1,28 @@
 import { db } from "@/lib/firebase";
-import { collection, addDoc, getDocs } from "firebase/firestore";
+import { doc, getDoc, addDoc, Timestamp, collection } from "firebase/firestore";
 import { NextResponse } from "next/server";
-import { Course } from "@/types/course";
 
 export async function POST(req: Request) {
   try {
-    const { name, distance, location, difficulty } = await req.json();
-    const docRef = await addDoc(collection(db, "courses"), {
-      name,
-      distance,
-      location,
-      difficulty,
-    });
-    return NextResponse.json(
-      { id: docRef.id, message: "러닝 코스 등록 완료" },
-      { status: 201 }
-    );
-  } catch (error) {
-    console.error(error);
-    return NextResponse.json({ error: "등록 실패" }, { status: 500 });
-  }
-}
+    const body = await req.json();
+    console.log("받은 코스 데이터:", body);
 
-export async function Get() {
-  try {
-    const querySnapshot = await getDocs(collection(db, "courses"));
-    const courses: Course[] = querySnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    })) as Course[];
-    return NextResponse.json(courses);
+    if (!body.name || !body.distance) {
+      return NextResponse.json({ error: "필수 입력값 부족" }, { status: 400 });
+    }
+    const courseRef = await addDoc(collection(db, "courses"), {
+      name: body.name,
+      distance: body.distance,
+      difficulty: body.difficulty,
+      slope: body.slope,
+      pavement: body.pavement,
+      complexity: body.complexity,
+      createdAt: Timestamp.now(),
+    });
+
+    return NextResponse.json({ id: courseRef.id, message: "코스 등록 완료" });
   } catch (error) {
-    console.error(error);
-    return NextResponse.json({ error: "데이터 조회 실패" }, { status: 500 });
+    console.error("코스 등록 에러:", error);
+    return NextResponse.json({ error: "코스 등록 실패" }, { status: 500 });
   }
 }
