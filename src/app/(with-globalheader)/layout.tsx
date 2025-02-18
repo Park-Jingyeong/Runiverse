@@ -1,21 +1,28 @@
-import Link from "next/link";
+// with-globalheader
+"use client";
 import { ReactNode } from "react";
-import { Pridi } from "next/font/google";
-
-const pridi = Pridi({
-  weight: "700",
-  subsets: ["latin"],
-});
+import GlobalHeader from "@/components/header/globalheader";
+import GlobalFooter from "@/components/footer/globalfooter";
+import { usePathname } from "next/navigation";
 
 export default function Layout({ children }: { children: ReactNode }) {
+  const pathname = usePathname();
+  const hideFooter = ["/new"];
+  const hideFooterDynamic =
+    hideFooter.includes(pathname) || pathname.startsWith("/courses");
   return (
     <>
-      <header className="border-b-2 p-3">
-        <Link href={"/"}>
-          <h1 className={`${pridi.className} text-5xl`}>Runiverse</h1>
-        </Link>
-      </header>
-      <main>{children}</main>
+      <GlobalHeader />
+      <main
+        className={`${
+          hideFooterDynamic
+            ? "min-h-[calc(100%-72px)]"
+            : "min-h-[calc(100%-160px)]"
+        } bg-white p-2`}
+      >
+        {children}
+      </main>
+      {!hideFooterDynamic && <GlobalFooter />}
     </>
   );
 }
