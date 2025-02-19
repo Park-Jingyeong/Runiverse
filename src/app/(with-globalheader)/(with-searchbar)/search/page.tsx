@@ -1,5 +1,6 @@
 // search page
 interface Course {
+  id: number;
   name: string;
 }
 
@@ -26,7 +27,7 @@ export default async function Page({
     <div className="py-4">
       <ul>
         {filteredData.map((course) => (
-          <h1>{course.name}</h1>
+          <h1 key={course.id}>{course.name}</h1>
         ))}
       </ul>
     </div>
