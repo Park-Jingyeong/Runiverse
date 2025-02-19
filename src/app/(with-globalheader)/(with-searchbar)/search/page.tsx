@@ -1,33 +1,42 @@
-// search page
-interface Course {
-  id: number;
-  name: string;
-}
+// search/page.tsx
+"use client";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
+import CourseCard from "@/components/coursecard";
+import { Course } from "@/types/course";
 
-export default async function Page({
-  searchParams,
-}: {
-  searchParams: Promise<{ q: string }>;
-}) {
-  const { q } = await searchParams;
+export default function Page() {
+  const searchParams = useSearchParams();
+  const q = searchParams.get("q") || "";
+  const [courses, setCourses] = useState<Course[]>([]);
 
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/courses/`
-  );
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!q) return;
 
-  if (!response.ok) {
-    return <div>오류가 발생했습니다.</div>;
-  }
-  const data: Course[] = await response.json();
-  const filteredData = data.filter((course) =>
-    course.name.toLowerCase().includes(q.toLowerCase())
-  );
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/courses/`
+        );
+        const data: Course[] = await response.json();
 
+        const filteredData = data.filter((course) =>
+          course.name.toLowerCase().includes(q.toLowerCase())
+        );
+        setCourses(filteredData);
+      } catch (error) {
+        console.error("Error fetching courses:", error);
+      }
+    };
+    fetchData();
+  }, [q]);
+
+  console.log(courses);
   return (
     <div className="py-4">
       <ul>
-        {filteredData.map((course) => (
-          <h1 key={course.id}>{course.name}</h1>
+        {courses.map((course) => (
+          <CourseCard key={course.id} course={course} />
         ))}
       </ul>
     </div>
