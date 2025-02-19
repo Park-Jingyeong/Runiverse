@@ -18,7 +18,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           hideFooterDynamic
             ? "min-h-[calc(100%-72px)]"
             : "min-h-[calc(100%-160px)]"
-        } bg-white p-2`}
+        } bg-white p-4`}
       >
         {children}
       </main>

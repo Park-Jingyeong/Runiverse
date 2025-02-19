@@ -12,7 +12,7 @@ import Image from "next/image";
 
 export default function GlobalFooter() {
   return (
-    <footer className="flex justify-between px-10 py-3 shadow-[0_-4px_8px_rgba(200,200,200,0.2)] bg-white">
+    <footer className="flex justify-between px-10 py-3 shadow-[0px_-4px_8px_-4px_rgba(0,0,0,0.1)] bg-white">
       <Link
         href={"/"}
         className="flex flex-col gap-1 items-center text-center content-center text-[#737373]"

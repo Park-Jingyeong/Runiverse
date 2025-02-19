@@ -1,3 +1,4 @@
+// src/app/api/courses/route.ts
 import { db } from "@/lib/firebase";
 import {
   doc,
