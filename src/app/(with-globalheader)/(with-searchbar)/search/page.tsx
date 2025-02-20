@@ -1,6 +1,6 @@
 // search/page.tsx
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import CourseCard from "@/components/coursecard";
 import { Course } from "@/types/course";
@@ -32,12 +32,14 @@ export default function Page() {
   }, [q]);
 
   return (
-    <div className="py-4">
-      <ul>
-        {courses.map((course) => (
-          <CourseCard key={course.id} course={course} />
-        ))}
-      </ul>
-    </div>
+    <Suspense>
+      <div className="py-4">
+        <ul>
+          {courses.map((course) => (
+            <CourseCard key={course.id} course={course} />
+          ))}
+        </ul>
+      </div>
+    </Suspense>
   );
 }
