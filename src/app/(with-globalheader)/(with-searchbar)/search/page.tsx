@@ -31,7 +31,6 @@ export default function Page() {
     fetchData();
   }, [q]);
 
-  console.log(courses);
   return (
     <div className="py-4">
       <ul>
