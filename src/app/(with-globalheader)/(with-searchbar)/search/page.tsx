@@ -1,19 +1,17 @@
 // src/app/(with-globalheader)/(with-searchbar)/search/page.tsx
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import CourseCard from "@/components/coursecard";
 import { Course } from "@/types/course";
 
 export default function Page() {
   const searchParams = useSearchParams();
-  const [searchQuery, setSearchQuery] = useState("");
-
+  const searchQuery = useMemo(
+    () => searchParams.get("q") || "",
+    [searchParams]
+  );
   const [courses, setCourses] = useState<Course[]>([]);
-
-  useEffect(() => {
-    setSearchQuery(searchParams.get("q") || "");
-  }, [searchParams]);
 
   useEffect(() => {
     const fetchData = async () => {
