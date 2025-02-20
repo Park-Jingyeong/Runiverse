@@ -1,6 +1,6 @@
 // src/app/(with-globalheader)/(with-searchbar)/layout.tsx
 import { ReactNode, Suspense } from "react";
-import SearchBar from "@/components/searchBar"; 
+import SearchBar from "@/components/searchBar";
 export default function Layout({ children }: { children: ReactNode }) {
   return (
     <>

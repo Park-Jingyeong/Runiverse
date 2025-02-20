@@ -3,7 +3,7 @@
 import { Course } from "@/types/course";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import CourseCard from "./courseCard";
+import CourseCard from "@/components/courseCard";
 
 export default function SearchResult() {
   const searchParams = useSearchParams();
