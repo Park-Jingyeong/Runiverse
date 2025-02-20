@@ -1,4 +1,4 @@
-// search bar
+// src/components/searchbar.tsx
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";

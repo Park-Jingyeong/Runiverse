@@ -1,18 +1,22 @@
-// search/page.tsx
+// src/app/(with-globalheader)/(with-searchbar)/search/page.tsx
 "use client";
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import CourseCard from "@/components/coursecard";
 import { Course } from "@/types/course";
 
 export default function Page() {
   const searchParams = useSearchParams();
-  const q = searchParams.get("q") || "";
   const [courses, setCourses] = useState<Course[]>([]);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  useEffect(() => {
+    setSearchQuery(searchParams.get("q") || "");
+  }, [searchParams]);
 
   useEffect(() => {
     const fetchData = async () => {
-      if (!q) return;
+      if (!searchQuery) return;
 
       try {
         const response = await fetch(
@@ -21,7 +25,7 @@ export default function Page() {
         const data: Course[] = await response.json();
 
         const filteredData = data.filter((course) =>
-          course.name.toLowerCase().includes(q.toLowerCase())
+          course.name.toLowerCase().includes(searchQuery.toLowerCase())
         );
         setCourses(filteredData);
       } catch (error) {
@@ -29,17 +33,19 @@ export default function Page() {
       }
     };
     fetchData();
-  }, [q]);
+  }, [searchQuery]);
 
   return (
-    <Suspense>
-      <div className="py-4">
+    <div className="py-4">
+      {courses.length > 0 ? (
         <ul>
           {courses.map((course) => (
             <CourseCard key={course.id} course={course} />
           ))}
         </ul>
-      </div>
-    </Suspense>
+      ) : (
+        <p className="text-center py-10">검색 결과가 없습니다.</p>
+      )}
+    </div>
   );
 }
