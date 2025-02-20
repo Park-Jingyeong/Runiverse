@@ -7,8 +7,9 @@ import { Course } from "@/types/course";
 
 export default function Page() {
   const searchParams = useSearchParams();
-  const [courses, setCourses] = useState<Course[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
+
+  const [courses, setCourses] = useState<Course[]>([]);
 
   useEffect(() => {
     setSearchQuery(searchParams.get("q") || "");
