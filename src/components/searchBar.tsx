@@ -1,15 +1,16 @@
-// search bar
+// src/components/searchbar.tsx
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import icon_search from "@/../public/search.svg";
 import Image from "next/image";
+
 export default function SearchBar() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [search, setSearch] = useState("");
 
-  const q = searchParams.get("q");
+  const q = searchParams.get("q") || "";
 
   useEffect(() => {
     setSearch(q || "");
