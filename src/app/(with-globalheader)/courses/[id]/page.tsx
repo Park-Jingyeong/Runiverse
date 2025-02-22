@@ -1,3 +1,5 @@
+import Calculator from "@/components/calculator";
+
 export default async function Page({
   params,
 }: {
@@ -25,7 +27,7 @@ export default async function Page({
       <div>거리 - {course.distance}km</div>
       <div>
         <h2 className="font-bold text-lg">예상 소요 시간</h2>
-        1km를 ()분 ()초로 뛰었을 때 약 ()시간 ()분 걸려요
+        <Calculator distance={course.distance} />
       </div>
       <div>
         <h2 className="font-bold text-lg">난이도</h2>
