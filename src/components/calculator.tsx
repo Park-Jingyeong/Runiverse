@@ -13,7 +13,7 @@ export default function Calculator({ distance }: { distance: number }) {
     <div className="leading-[50px]">
       1km를 {""}
       <select
-        className="border-[1px] border-[#D8D8D8] w-20 h-10 rounded-xl p-2"
+        className="border-2 border-[#D8D8D8] w-20 h-10 rounded-xl p-2"
         value={minute}
         onChange={(e) => setMinute(Number(e.target.value))}
       >
@@ -25,7 +25,7 @@ export default function Calculator({ distance }: { distance: number }) {
       </select>
       {""} 분 {""}
       <select
-        className="border-[1px] border-[#D8D8D8] w-20 h-10 rounded-xl p-2"
+        className="border-2 border-[#D8D8D8] w-20 h-10 rounded-xl p-2"
         value={second}
         onChange={(e) => setSecond(Number(e.target.value))}
       >
@@ -38,7 +38,7 @@ export default function Calculator({ distance }: { distance: number }) {
       {""} 초로 뛰었을 때,
       <div className="flex gap-2 items-center">
         약
-        <p className="border-[1px] border-[#D8D8D8] w-[120px] h-10 rounded-xl p-2 flex items-center justify-end font-bold">
+        <p className="border-2 border-[#D8D8D8] w-[120px] h-10 rounded-xl p-2 flex items-center justify-end font-bold">
           {hours}시간 {minutes}분
         </p>
         걸려요
