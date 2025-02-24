@@ -12,6 +12,8 @@ import like from "@/../public/like.svg";
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { Course } from "@/types/course";
+import GradientBar from "@/components/gradientBar";
+
 export default function Page() {
   const [course, setCourse] = useState<Course | null>(null);
   const [loading, setLoading] = useState(false);
@@ -101,6 +103,7 @@ export default function Page() {
         </div>
         <div>
           <h2 className="font-bold text-lg">고도</h2>
+          <GradientBar />
           {course.slope}
         </div>
         <div>
