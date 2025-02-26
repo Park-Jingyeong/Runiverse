@@ -52,7 +52,7 @@ export default function Page() {
     return <div>로딩 중...</div>;
   }
   if (!course) {
-    return <div>코스를 찾을 수 없습니다.</div>;
+    return <div>코스 정보 로딩 중...</div>;
   }
 
   return (
@@ -96,15 +96,31 @@ export default function Page() {
         <h2 className="font-bold text-xl">예상 소요 시간</h2>
         <Calculator distance={course.distance} />
       </div>
-      <div>
+      <div className="flex flex-col gap-6">
         <div>
           <h2 className="font-bold text-xl">난이도</h2>
           {course.difficulty}
         </div>
         <div>
-          <h2 className="font-bold text-lg">고도</h2>
-          <GradientBar />
-          {course.slope}
+          <GradientBar
+            title="고도"
+            value={10}
+            state={["평지", "완만한 언덕", "가파른 언덕"]}
+          />
+        </div>
+        <div>
+          <GradientBar
+            title="도로 유형"
+            value={10}
+            state={["포장 도로", "혼합", "비포장 도로"]}
+          />
+        </div>
+        <div>
+          <GradientBar
+            title="복잡도"
+            value={10}
+            state={["직선 코스", "S자 커브", "다양한 갈래길"]}
+          />
         </div>
         <div>
           <h2 className="font-bold text-lg">편의 시설</h2>
