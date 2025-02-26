@@ -49,10 +49,10 @@ export default function Page() {
   }, [id]);
 
   if (loading) {
-    return <div>로딩 중...</div>;
+    return <div className="text-center my-10">로딩 중...</div>;
   }
   if (!course) {
-    return <div>코스 정보 로딩 중...</div>;
+    return <div className="text-center my-10">코스 정보 로딩 중...</div>;
   }
 
   return (
