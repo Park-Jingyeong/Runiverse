@@ -105,21 +105,22 @@ export default function Page() {
         <div>
           <GradientBar
             title="고도"
-            value={10}
+            value={50}
             state={["평지", "완만한 언덕", "가파른 언덕"]}
-          />
+          />  
+          {course.slope}
         </div>
         <div>
           <GradientBar
             title="도로 유형"
-            value={10}
+            value={20}
             state={["포장 도로", "혼합", "비포장 도로"]}
           />
         </div>
         <div>
           <GradientBar
             title="복잡도"
-            value={10}
+            value={16}
             state={["직선 코스", "S자 커브", "다양한 갈래길"]}
           />
         </div>
