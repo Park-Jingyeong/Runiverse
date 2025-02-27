@@ -13,6 +13,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { Course } from "@/types/course";
 import GradientBar from "@/components/gradientBar";
+import FacilityInfo from "@/components/facilityInfo";
 
 export default function Page() {
   const [course, setCourse] = useState<Course | null>(null);
@@ -49,10 +50,10 @@ export default function Page() {
   }, [id]);
 
   if (loading) {
-    return <div className="text-center my-10">로딩 중...</div>;
+    return <div className="text-center my-5">로딩 중...</div>;
   }
   if (!course) {
-    return <div className="text-center my-10">코스 정보 로딩 중...</div>;
+    return <div className="text-center my-5">코스 정보 로딩 중...</div>;
   }
 
   return (
@@ -123,9 +124,10 @@ export default function Page() {
           />
         </div>
         <div>
-          <h2 className="font-bold text-lg">편의 시설</h2>
-          <div>화장실 - {course.toilet}</div>
-          <div>주차 공간 - {course.parking}</div>
+          <FacilityInfo
+            toilet={String(course.toilet)}
+            parking={String(course.parking)}
+          />
         </div>
       </div>
       <div>

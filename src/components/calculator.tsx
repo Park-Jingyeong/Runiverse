@@ -10,7 +10,7 @@ export default function Calculator({ distance }: { distance: number }) {
   const hours = Math.floor(totalMinutes / 60);
   const minutes = totalMinutes - hours * 60;
   return (
-    <div className="leading-[50px]">
+    <div className="leading-[50px] mt-4">
       1km를 {""}
       <select
         className="border-2 border-[#D8D8D8] w-20 h-10 rounded-xl p-2"
@@ -46,3 +46,4 @@ export default function Calculator({ distance }: { distance: number }) {
     </div>
   );
 }
+
