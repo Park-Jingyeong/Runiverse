@@ -6,9 +6,7 @@ import { Suspense } from "react";
 export default function Page() {
   return (
     <div className="py-4">
-      <Suspense
-        fallback={<p className="text-center py-10">검색 결과 불러오는 중...</p>}
-      >
+      <Suspense fallback={<p className="text-center py-5">불러오는 중...</p>}>
         <SearchResult />
       </Suspense>
     </div>

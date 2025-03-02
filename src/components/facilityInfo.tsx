@@ -10,7 +10,6 @@ const borderColor = {
 };
 
 export default function FacilityInfo({ toilet, parking }: Facility) {
-  const propsValue = [toilet, parking];
   return (
     <div className="flex flex-col gap-2">
       <h2 className="font-bold text-lg">편의 시설</h2>
