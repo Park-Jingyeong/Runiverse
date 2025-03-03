@@ -15,11 +15,11 @@ export default function RootLayout({
   return (
     <html lang="ko" className="h-full">
       <body className="max-w-[600px] mx-auto my-0 bg-gray-50 h-full">
-        {children}
         <Script
-          type="text/javascript"
-          src={`https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAOMAP_KEY}&libraries=services,cluster`}
-        ></Script>
+          strategy="beforeInteractive"
+          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_API_KEY}&autoload=false`}
+        />
+        {children}
       </body>
     </html>
   );
