@@ -14,6 +14,7 @@ import { useParams } from "next/navigation";
 import { Course } from "@/types/course";
 import GradientBar from "@/components/gradientBar";
 import FacilityInfo from "@/components/facilityInfo";
+import KakaoMaps from "@/components/kakaoMaps";
 
 export default function Page() {
   const [course, setCourse] = useState<Course | null>(null);
@@ -130,8 +131,14 @@ export default function Page() {
           />
         </div>
       </div>
-      <div>
+      <div className="flex flex-col gap-4">
         <h2 className="font-bold text-xl">지도</h2>
+        <KakaoMaps />
+        <div>
+          <div>출발</div>
+          <div>경유</div>
+          <div>도착</div>
+        </div>
       </div>
     </div>
   );
