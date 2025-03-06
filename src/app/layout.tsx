@@ -4,8 +4,8 @@ import "./globals.css";
 import localFont from "next/font/local";
 import Script from "next/script";
 
-export const pretendard = localFont({
-  src: "../../public/font/PretendardVariable.woff2",
+const pretendard = localFont({
+  src: "../style/font/PretendardVariable.woff2",
   display: "swap",
   weight: "45 920",
   variable: "--font-pretendard",
