@@ -39,6 +39,19 @@ export default function LocationPoint() {
           </button>
         </div>
       </div>
+
+      <div>
+        <h2 className="text-lg mb-1">도착지</h2>
+        <div className="flex gap-2">
+          <input
+            placeholder="도착하는 지점을 입력해주세요."
+            className="h-[50px] border-2 rounded-xl p-4 flex-1"
+          />
+          <button className="h-[50px] rounded-xl bg-[#4BB7D4] text-white w-20 font-bold">
+            찾기
+          </button>
+        </div>
+      </div>
       <div>
         <h2 className="text-lg mb-1">경유지</h2>
         <div className="flex flex-col gap-2">
@@ -66,18 +79,6 @@ export default function LocationPoint() {
               )}
             </div>
           ))}
-        </div>
-      </div>
-      <div>
-        <h2 className="text-lg mb-1">도착지</h2>
-        <div className="flex gap-2">
-          <input
-            placeholder="도착하는 지점을 입력해주세요."
-            className="h-[50px] border-2 rounded-xl p-4 flex-1"
-          />
-          <button className="h-[50px] rounded-xl bg-[#4BB7D4] text-white w-20 font-bold">
-            찾기
-          </button>
         </div>
       </div>
     </div>
