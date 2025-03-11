@@ -1,8 +1,10 @@
+// src/app/(with-globalheader)/new/page.tsx
 "use client";
 import { useState } from "react";
 import add_48 from "@/../public/add_48.svg";
 import Image from "next/image";
 import KakaoMaps from "@/components/kakaoMaps";
+import LocationPoint from "@/components/loactionPoint";
 export default function Page() {
   const [form, setForm] = useState({
     name: "",
@@ -106,6 +108,7 @@ export default function Page() {
             </h1>
             {/* 지도 */}
             <KakaoMaps />
+            <LocationPoint />
           </div>
           <div className="flex flex-col gap-6">
             <h1 className="text-xl font-bold text-center">
