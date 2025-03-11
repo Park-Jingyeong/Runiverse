@@ -4,7 +4,8 @@ import { useState } from "react";
 import add_48 from "@/../public/add_48.svg";
 import Image from "next/image";
 import KakaoMaps from "@/components/kakaoMaps";
-import LocationPoint from "@/components/loactionPoint";
+import LocationPointInput from "@/components/input/loactionPointInput";
+import CourseInfoInput from "@/components/input/courseInfoInput";
 export default function Page() {
   const [form, setForm] = useState({
     name: "",
@@ -108,48 +109,20 @@ export default function Page() {
             </h1>
             {/* 지도 */}
             <KakaoMaps />
-            <LocationPoint />
+            <LocationPointInput />
           </div>
           <div className="flex flex-col gap-6">
-            <h1 className="text-xl font-bold text-center">
-              코스의 난이도는 어땠나요?
-            </h1>
-            <select
-              name="difficulty"
-              value={form.difficulty}
-              onChange={handleChange}
-            >
-              <option value="very easy">아주 쉬움</option>
-              <option value="easy">조금 쉬움</option>
-              <option value="medium">중간</option>
-              <option value="hard">조금 어려움</option>
-              <option value="very hard">아주 어려움</option>
-            </select>
-            <select name="slope" value={form.slope} onChange={handleChange}>
-              <option value="flat">평지</option>
-              <option value="hilly">완만한 언덕</option>
-              <option value="steep">가파른 언덕</option>
-            </select>
-
+            <CourseInfoInput />
+            {/* 
             <select
               name="pavement"
               value={form.pavement}
               onChange={handleChange}
             >
-              <option value="paved">포장 도록</option>
+              <option value="paved">포장 도로</option>
               <option value="gravel">혼합</option>
               <option value="trail">비포장 도로</option>
-            </select>
-
-            <select
-              name="complexity"
-              value={form.complexity}
-              onChange={handleChange}
-            >
-              <option value="low">직선 코스</option>
-              <option value="moderate">S자 커브</option>
-              <option value="high">다양한 갈래길</option>
-            </select>
+            </select> */}
           </div>
           <button
             type="submit"

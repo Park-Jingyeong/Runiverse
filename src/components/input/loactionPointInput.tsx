@@ -7,7 +7,7 @@ import remove_white_48 from "@/../public/remove_white_48.svg";
 
 type Waypoint = { id: number; value: string };
 
-export default function LocationPoint() {
+export default function LoactionPointInput() {
   const [wayInputs, setWayInput] = useState<Waypoint[]>([{ id: 1, value: "" }]);
 
   const addWayInput = () => {
