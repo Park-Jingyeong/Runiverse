@@ -14,6 +14,8 @@ export default function Page() {
     slope: 0,
     pavement: 0,
     complexity: 0,
+    toilet: null,
+    parking: null,
   });
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -32,6 +34,13 @@ export default function Page() {
     key: "slope" | "pavement" | "complexity",
     value: number
   ) => {
+    setForm((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+  };
+
+  const handleFacilityChange = (key: "toilet" | "parking", value: number) => {
     setForm((prev) => ({
       ...prev,
       [key]: value,
@@ -121,6 +130,10 @@ export default function Page() {
               }
               onChangeComplexity={(value) =>
                 handleGradientChange("complexity", value)
+              }
+              onChangeToilet={(value) => handleFacilityChange("toilet", value)}
+              onChangeParking={(value) =>
+                handleFacilityChange("parking", value)
               }
             />
           </div>
