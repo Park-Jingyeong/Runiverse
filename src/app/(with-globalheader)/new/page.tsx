@@ -1,17 +1,21 @@
+// src/app/(with-globalheader)/new/page.tsx
+
 "use client";
 import { useState } from "react";
 import add_48 from "@/../public/add_48.svg";
 import Image from "next/image";
 import KakaoMaps from "@/components/kakaoMaps";
+import LocationPointInput from "@/components/input/loactionPointInput";
+import CourseInfoInput from "@/components/input/courseInfoInput";
 export default function Page() {
   const [form, setForm] = useState({
     name: "",
     distance: "",
-    image: "",
-    difficulty: "",
-    slope: "",
-    pavement: "",
-    complexity: "",
+    slope: 0,
+    pavement: 0,
+    complexity: 0,
+    toilet: null,
+    parking: null,
   });
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -23,6 +27,23 @@ export default function Page() {
     setForm((prev) => ({
       ...prev,
       [name]: value,
+    }));
+  };
+
+  const handleGradientChange = (
+    key: "slope" | "pavement" | "complexity",
+    value: number
+  ) => {
+    setForm((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+  };
+
+  const handleFacilityChange = (key: "toilet" | "parking", value: number) => {
+    setForm((prev) => ({
+      ...prev,
+      [key]: value,
     }));
   };
 
@@ -41,15 +62,6 @@ export default function Page() {
       if (!res.ok) throw new Error(data.error || "코스 등록 실패");
 
       setMessage("코스 등록 성공");
-      setForm({
-        name: "",
-        distance: "",
-        image: "",
-        difficulty: "",
-        slope: "",
-        pavement: "",
-        complexity: "",
-      });
     } catch (error) {
       setMessage("코스 등록 오류");
       console.log(error);
@@ -79,11 +91,13 @@ export default function Page() {
             <div className="flex flex-col gap-2">
               <h2 className="text-xl font-bold">총 거리</h2>
               <div className="flex gap-2 items-end">
+                {/* @TODO 거리 숫자값 변경 필요 */}
                 <input
                   className="w-full h-[50px] border-2 rounded-xl p-4"
                   type="text"
                   name="distance"
                   placeholder="총 거리를 입력해주세요."
+                  value={form.distance}
                   onChange={handleChange}
                 />
                 <div className="text-xl font-bold">km</div>
@@ -91,7 +105,7 @@ export default function Page() {
             </div>
             <div className="flex flex-col gap-2">
               <h2 className="text-xl font-bold">이미지를 첨부해주세요.</h2>
-              {/* 이미지 첨부 구현 */}
+              {/* @TODO - 이미지 첨부 구현 */}
               <button className="w-[140px] h-[140px] border-2 rounded-xl">
                 <Image src={add_48} alt="add image" className="m-auto" />
               </button>
@@ -104,50 +118,26 @@ export default function Page() {
             <h1 className="text-xl font-bold text-center">
               코스의 경로를 입력해주세요.
             </h1>
-            {/* 지도 */}
+            {/* @TODO - 지도 */}
             <KakaoMaps />
+            <LocationPointInput />
           </div>
           <div className="flex flex-col gap-6">
-            <h1 className="text-xl font-bold text-center">
-              코스의 난이도는 어땠나요?
-            </h1>
-            <select
-              name="difficulty"
-              value={form.difficulty}
-              onChange={handleChange}
-            >
-              <option value="very easy">아주 쉬움</option>
-              <option value="easy">조금 쉬움</option>
-              <option value="medium">중간</option>
-              <option value="hard">조금 어려움</option>
-              <option value="very hard">아주 어려움</option>
-            </select>
-            <select name="slope" value={form.slope} onChange={handleChange}>
-              <option value="flat">평지</option>
-              <option value="hilly">완만한 언덕</option>
-              <option value="steep">가파른 언덕</option>
-            </select>
-
-            <select
-              name="pavement"
-              value={form.pavement}
-              onChange={handleChange}
-            >
-              <option value="paved">포장 도록</option>
-              <option value="gravel">혼합</option>
-              <option value="trail">비포장 도로</option>
-            </select>
-
-            <select
-              name="complexity"
-              value={form.complexity}
-              onChange={handleChange}
-            >
-              <option value="low">직선 코스</option>
-              <option value="moderate">S자 커브</option>
-              <option value="high">다양한 갈래길</option>
-            </select>
+            <CourseInfoInput
+              onChangeSlope={(value) => handleGradientChange("slope", value)}
+              onChangePavement={(value) =>
+                handleGradientChange("pavement", value)
+              }
+              onChangeComplexity={(value) =>
+                handleGradientChange("complexity", value)
+              }
+              onChangeToilet={(value) => handleFacilityChange("toilet", value)}
+              onChangeParking={(value) =>
+                handleFacilityChange("parking", value)
+              }
+            />
           </div>
+          {/* @TODO - 로딩 처리 */}
           <button
             type="submit"
             className="bg-[#4BB7D4] text-white rounded-xl w-40 h-10"
