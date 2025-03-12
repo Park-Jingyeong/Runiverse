@@ -1,4 +1,5 @@
 // src/app/(with-globalheader)/new/page.tsx
+
 "use client";
 import { useState } from "react";
 import add_48 from "@/../public/add_48.svg";
@@ -10,11 +11,9 @@ export default function Page() {
   const [form, setForm] = useState({
     name: "",
     distance: "",
-    image: "",
-    difficulty: "",
-    slope: "",
-    pavement: "",
-    complexity: "",
+    slope: 0,
+    pavement: 0,
+    complexity: 0,
   });
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -26,6 +25,16 @@ export default function Page() {
     setForm((prev) => ({
       ...prev,
       [name]: value,
+    }));
+  };
+
+  const handleGradientChange = (
+    key: "slope" | "pavement" | "complexity",
+    value: number
+  ) => {
+    setForm((prev) => ({
+      ...prev,
+      [key]: value,
     }));
   };
 
@@ -44,15 +53,6 @@ export default function Page() {
       if (!res.ok) throw new Error(data.error || "코스 등록 실패");
 
       setMessage("코스 등록 성공");
-      setForm({
-        name: "",
-        distance: "",
-        image: "",
-        difficulty: "",
-        slope: "",
-        pavement: "",
-        complexity: "",
-      });
     } catch (error) {
       setMessage("코스 등록 오류");
       console.log(error);
@@ -87,6 +87,7 @@ export default function Page() {
                   type="text"
                   name="distance"
                   placeholder="총 거리를 입력해주세요."
+                  value={form.distance}
                   onChange={handleChange}
                 />
                 <div className="text-xl font-bold">km</div>
@@ -112,18 +113,17 @@ export default function Page() {
             <LocationPointInput />
           </div>
           <div className="flex flex-col gap-6">
-            <CourseInfoInput />
-            {/* 
-            <select
-              name="pavement"
-              value={form.pavement}
-              onChange={handleChange}
-            >
-              <option value="paved">포장 도로</option>
-              <option value="gravel">혼합</option>
-              <option value="trail">비포장 도로</option>
-            </select> */}
+            <CourseInfoInput
+              onChangeSlope={(value) => handleGradientChange("slope", value)}
+              onChangePavement={(value) =>
+                handleGradientChange("pavement", value)
+              }
+              onChangeComplexity={(value) =>
+                handleGradientChange("complexity", value)
+              }
+            />
           </div>
+          {/* 로딩 처리 */}
           <button
             type="submit"
             className="bg-[#4BB7D4] text-white rounded-xl w-40 h-10"
