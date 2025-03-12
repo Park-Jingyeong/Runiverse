@@ -82,6 +82,7 @@ export default function Page() {
             <div className="flex flex-col gap-2">
               <h2 className="text-xl font-bold">총 거리</h2>
               <div className="flex gap-2 items-end">
+                {/* @TODO 거리 숫자값 변경 필요 */}
                 <input
                   className="w-full h-[50px] border-2 rounded-xl p-4"
                   type="text"
@@ -95,7 +96,7 @@ export default function Page() {
             </div>
             <div className="flex flex-col gap-2">
               <h2 className="text-xl font-bold">이미지를 첨부해주세요.</h2>
-              {/* 이미지 첨부 구현 */}
+              {/* @TODO - 이미지 첨부 구현 */}
               <button className="w-[140px] h-[140px] border-2 rounded-xl">
                 <Image src={add_48} alt="add image" className="m-auto" />
               </button>
@@ -108,7 +109,7 @@ export default function Page() {
             <h1 className="text-xl font-bold text-center">
               코스의 경로를 입력해주세요.
             </h1>
-            {/* 지도 */}
+            {/* @TODO - 지도 */}
             <KakaoMaps />
             <LocationPointInput />
           </div>
@@ -123,7 +124,7 @@ export default function Page() {
               }
             />
           </div>
-          {/* 로딩 처리 */}
+          {/* @TODO - 로딩 처리 */}
           <button
             type="submit"
             className="bg-[#4BB7D4] text-white rounded-xl w-40 h-10"

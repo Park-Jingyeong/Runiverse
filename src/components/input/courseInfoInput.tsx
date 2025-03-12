@@ -57,7 +57,7 @@ export default function CourseInfoInput({
       </div>
       <div className="flex flex-col gap-2">
         <h2 className="text-lg font-bold">편의 시설</h2>
-        {/* button onClick 기능 구현 */}
+        {/* @TODO - button onClick 기능 구현 */}
         <div className="flex justify-between items-center">
           <div>화장실</div>
           <div className="flex gap-2">
