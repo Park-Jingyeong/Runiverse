@@ -1,4 +1,5 @@
 // src/app/api/courses/route.ts
+
 import { db } from "@/lib/firebase";
 import {
   doc,
@@ -24,6 +25,8 @@ export async function POST(req: Request) {
       slope: body.slope,
       pavement: body.pavement,
       complexity: body.complexity,
+      toilet: body.toilet,
+      parking: body.parking,
       createdAt: Timestamp.now(),
     });
 

@@ -1,6 +1,6 @@
 interface Facility {
-  toilet: string;
-  parking: string;
+  toilet: number;
+  parking: number;
 }
 
 const value = ["있음", "모름", "없음"];
@@ -17,23 +17,17 @@ export default function FacilityInfo({ toilet, parking }: Facility) {
         <h3>화장실</h3>
         <div className="flex gap-2">
           <div
-            className={`${
-              value[0] === toilet ? borderColor.blue : borderColor.none
-            }`}
+            className={`${toilet === 0 ? borderColor.blue : borderColor.none}`}
           >
             {value[0]}
           </div>
           <div
-            className={`${
-              value[1] === toilet ? borderColor.blue : borderColor.none
-            }`}
+            className={`${toilet === 1 ? borderColor.blue : borderColor.none}`}
           >
             {value[1]}
           </div>
           <div
-            className={`${
-              value[2] === toilet ? borderColor.blue : borderColor.none
-            }`}
+            className={`${toilet === 2 ? borderColor.blue : borderColor.none}`}
           >
             {value[2]}
           </div>
@@ -43,23 +37,17 @@ export default function FacilityInfo({ toilet, parking }: Facility) {
         <h3>주차 공간</h3>
         <div className="flex gap-2">
           <div
-            className={`${
-              value[0] === parking ? borderColor.blue : borderColor.none
-            }`}
+            className={`${parking === 0 ? borderColor.blue : borderColor.none}`}
           >
             {value[0]}
           </div>
           <div
-            className={`${
-              value[1] === parking ? borderColor.blue : borderColor.none
-            }`}
+            className={`${parking === 1 ? borderColor.blue : borderColor.none}`}
           >
             {value[1]}
           </div>
           <div
-            className={`${
-              value[2] === parking ? borderColor.blue : borderColor.none
-            }`}
+            className={`${parking === 2 ? borderColor.blue : borderColor.none}`}
           >
             {value[2]}
           </div>

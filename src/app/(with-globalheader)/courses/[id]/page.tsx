@@ -59,7 +59,7 @@ export default function Page() {
 
   return (
     <div className="flex flex-col gap-8">
-      {/* 이미지 */}
+      {/* @TODO - 이미지 */}
       <div className="flex flex-col gap-6">
         <div className="flex justify-between">
           <div className="flex flex-col gap-2">
@@ -88,6 +88,7 @@ export default function Page() {
             <div>{course.distance}km</div>
           </div>
           <button className="flex gap-1 w-1/2 justify-center items-center">
+            {/* @TODO - 아이콘 변경 */}
             <Image src={like} alt="like" />
             <div>추천해요</div>
           </button>
@@ -107,28 +108,25 @@ export default function Page() {
           <GradientBar
             title="고도"
             value={["평지", "완만한 언덕", "가파른 언덕"]}
-            state={String(course.slope)}
+            state={course.slope}
           />
         </div>
         <div>
           <GradientBar
             title="도로 유형"
             value={["포장 도로", "혼합", "비포장 도로"]}
-            state={String(course.pavement)}
+            state={course.pavement}
           />
         </div>
         <div>
           <GradientBar
             title="복잡도"
             value={["직선 코스", "S자 코스", "다양한 갈래길"]}
-            state={String(course.complexity)}
+            state={course.complexity}
           />
         </div>
         <div>
-          <FacilityInfo
-            toilet={String(course.toilet)}
-            parking={String(course.parking)}
-          />
+          <FacilityInfo toilet={course.toilet} parking={course.parking} />
         </div>
       </div>
       <div className="flex flex-col gap-4">
