@@ -3,7 +3,7 @@
 interface CourseInfo {
   title: string;
   value: string[];
-  state: string;
+  state: number;
 }
 
 const barLocation = {
@@ -15,14 +15,14 @@ const barLocation = {
 export default function GradientBar({ title, value, state }: CourseInfo) {
   let bar = "";
   switch (state) {
-    case String(value[0]):
+    case (0):
       bar = "absolute bg-black w-1 h-11 rounded-xl top-[-5px] bottom-0 left-5";
       break;
-    case String(value[1]):
+    case (1):
       bar =
         "absolute bg-black w-1 h-11 rounded-xl top-[-5px] bottom-0 right-1/2";
       break;
-    case String(value[2]):
+    case (2):
       bar = "absolute bg-black w-1 h-11 rounded-xl top-[-5px] bottom-0 right-5";
       break;
   }

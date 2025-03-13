@@ -7,10 +7,12 @@ import Image from "next/image";
 import KakaoMaps from "@/components/kakaoMaps";
 import LocationPointInput from "@/components/input/loactionPointInput";
 import CourseInfoInput from "@/components/input/courseInfoInput";
+
 export default function Page() {
   const [form, setForm] = useState({
     name: "",
     distance: "",
+    difficulty: "",
     slope: 0,
     pavement: 0,
     complexity: 0,
@@ -69,6 +71,7 @@ export default function Page() {
       setLoading(false);
     }
   };
+  
   return (
     <div>
       <form onSubmit={handleSubmit}>

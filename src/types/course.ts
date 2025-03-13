@@ -4,9 +4,9 @@ export interface Course {
   distance: number;
   location?: string;
   difficulty?: string;
-  slope?: number;
-  pavement?: number;
-  complexity?: number;
-  toilet?: number;
-  parking?: number;
+  slope: number;
+  pavement: number;
+  complexity: number;
+  toilet: number;
+  parking: number;
 }
