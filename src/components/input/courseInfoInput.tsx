@@ -24,12 +24,14 @@ export default function CourseInfoInput({
   const [toilet, setToilet] = useState<number | null>(null);
   const [parking, setParking] = useState<number | null>(null);
 
-  const handleToiletClick = (value: number) => {
+  const handleToiletClick = (value: number, e: React.MouseEvent) => {
+    e.preventDefault();
     setToilet(value);
     onChangeToilet(value);
   };
 
-  const handleParkingClick = (value: number) => {
+  const handleParkingClick = (value: number, e: React.MouseEvent) => {
+    e.preventDefault();
     setParking(value);
     onChangeParking(value);
   };
@@ -93,7 +95,7 @@ export default function CourseInfoInput({
                 className={`border-2 rounded-xl w-20 h-[30px] ${
                   toilet === index ? "border-[#4BB7D4]" : ""
                 }`}
-                onClick={() => handleToiletClick(index)}
+                onClick={(e) => handleToiletClick(index, e)}
               >
                 {label}
               </button>
@@ -109,7 +111,7 @@ export default function CourseInfoInput({
                 className={`border-2 rounded-xl w-20 h-[30px] ${
                   parking === index ? "border-[#4BB7D4]" : ""
                 }`}
-                onClick={() => handleParkingClick(index)}
+                onClick={(e) => handleParkingClick(index, e)}
               >
                 {label}
               </button>
