@@ -26,6 +26,7 @@ export default function Page() {
   const toggleBookMark = () => {
     setIsBookMarked(!isBookMarked);
   };
+
   useEffect(() => {
     const fetchData = async () => {
       if (!id) return;
@@ -57,9 +58,18 @@ export default function Page() {
     return <div className="text-center my-5">코스 정보 로딩 중...</div>;
   }
 
+  console.log(course.imageUrl);
   return (
     <div className="flex flex-col gap-8">
-      {/* @TODO - 이미지 */}
+      {/* @TODO - 이미지 렌더링 */}
+      <div className="w-[600px] h-[400px] relative left-[-16px] overflow-hidden">
+        <Image
+          src={course.imageUrl}
+          alt="course image"
+          fill
+          className="object-cover"
+        />
+      </div>
       <div className="flex flex-col gap-6">
         <div className="flex justify-between">
           <div className="flex flex-col gap-2">

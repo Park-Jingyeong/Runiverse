@@ -8,7 +8,6 @@ import flag_fill_30 from "@/../public/flag_fill_30.svg";
 import pin_20 from "@/../public/pin_20.svg";
 import star_fill_20 from "@/../public/star_fill_20.svg";
 import distance_20 from "@/../public/distance_20.svg";
-import bg1 from "@/../public/bg1.jpg";
 import { Course } from "@/types/course";
 
 export default function CourseCard({ course }: { course: Course }) {
@@ -18,6 +17,7 @@ export default function CourseCard({ course }: { course: Course }) {
     setIsBookMarked(!isBookMarked);
   };
 
+  console.log(course.imageUrl);
   return (
     <div className="max-w-[568px] h-[150px] flex rounded-xl overflow-hidden mb-2">
       <Link
@@ -25,7 +25,7 @@ export default function CourseCard({ course }: { course: Course }) {
         href={`/courses/${course.id}`}
       >
         <Image
-          src={bg1}
+          src={course.imageUrl}
           alt="background image"
           style={{ objectFit: "cover" }}
           fill

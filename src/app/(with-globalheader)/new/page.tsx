@@ -24,7 +24,6 @@ export default function Page() {
   });
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-  const [uploadedUrl, setUploadedUrl] = useState("");
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -43,15 +42,14 @@ export default function Page() {
       const storageRef = ref(storage, `course-image-test/${file.name}`);
       await uploadBytes(storageRef, file);
       const url = await getDownloadURL(storageRef);
+      // const imageUrl = await URL.createObjectURL(file);
       setForm((prev) => ({
         ...prev,
         image: file,
         imageUrl: url,
       }));
-      const previewUrl = URL.createObjectURL(file);
-      setUploadedUrl(previewUrl);
+
       console.log("file uploaded successfully");
-      console.log(uploadedUrl);
     }
   };
 
@@ -134,10 +132,10 @@ export default function Page() {
                 {form.image ? (
                   <div>
                     <Image
-                      src={uploadedUrl}
+                      src={form.imageUrl}
                       alt="preview"
-                      width={100}
-                      height={100}
+                      width={400}
+                      height={300}
                       className="w-full h-full object-cover rounded-xl m-auto"
                     />
                   </div>
