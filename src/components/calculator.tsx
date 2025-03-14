@@ -1,7 +1,7 @@
 // src/components/calculator.tsx
 "use client";
 import { useState } from "react";
-
+import Image from "next/image";
 export default function Calculator({ distance }: { distance: number }) {
   const [minute, setMinute] = useState(1);
   const [second, setSecond] = useState(0);
@@ -11,7 +11,7 @@ export default function Calculator({ distance }: { distance: number }) {
   const minutes = totalMinutes - hours * 60;
   return (
     <div className="leading-[50px] mt-4 text-center">
-      1km를 {""}
+      1K를 {""}
       <select
         className="border-2 border-[#D8D8D8] w-20 h-10 rounded-xl p-2"
         value={minute}
