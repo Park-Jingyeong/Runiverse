@@ -1,14 +1,19 @@
 // index
 
+import Link from "next/link";
+
 export default function Home() {
   return (
     <div className="flex flex-col gap-8">
+      <Link href={"/new"}>
+        <button className="text-lg bg-[#4BB7D4] text-white rounded-lg p-2">임시 코스 등록 버튼</button>
+      </Link>
       <section>
         <h1 className="bold text-xl">Slider Section</h1>
         <div>course component</div>
       </section>
       <section>
-        <button className="bg-[#4BB7D4] w-80 h-10 rounded-lg">
+        <button className="bg-[#4BB7D4] w-80 h-10 rounded-lg text-white">
           오늘의 러닝 코스 추천받기
         </button>
       </section>

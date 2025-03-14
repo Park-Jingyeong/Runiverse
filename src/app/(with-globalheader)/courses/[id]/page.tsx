@@ -59,7 +59,7 @@ export default function Page() {
 
   return (
     <div className="flex flex-col gap-8">
-      {/* @TODO - 이미지 */}
+      {/* @TODO - 이미지 렌더링 */}
       <div className="flex flex-col gap-6">
         <div className="flex justify-between">
           <div className="flex flex-col gap-2">
