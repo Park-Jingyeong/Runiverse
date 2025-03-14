@@ -26,6 +26,8 @@ export async function POST(req: Request) {
       complexity: body.complexity,
       image: body.image,
       imageUrl: body.imageUrl,
+      toilet: body.toilet,
+      parking: body.parking,
       // createdAt: Timestamp.now(),
     });
 
