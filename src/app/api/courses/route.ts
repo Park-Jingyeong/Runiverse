@@ -20,11 +20,15 @@ export async function POST(req: Request) {
     const courseRef = await addDoc(collection(db, "courses"), {
       name: body.name,
       distance: body.distance,
-      difficulty: body.difficulty,
+      // difficulty: body.difficulty,
       slope: body.slope,
       pavement: body.pavement,
       complexity: body.complexity,
-      createdAt: Timestamp.now(),
+      image: body.image,
+      imageUrl: body.imageUrl,
+      toilet: body.toilet,
+      parking: body.parking,
+      // createdAt: Timestamp.now(),
     });
 
     return NextResponse.json({ id: courseRef.id, message: "코스 등록 완료" });

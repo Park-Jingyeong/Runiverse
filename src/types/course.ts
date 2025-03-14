@@ -2,11 +2,11 @@ export interface Course {
   id: string;
   name: string;
   distance: number;
-  location: string;
-  difficulty: string;
-  slope?: string;
-  pavement?: string;
-  complexity?: string;
-  toilet?: string;
-  parking?: string;
+  location?: string;
+  difficulty?: string;
+  slope: number;
+  pavement: number;
+  complexity: number;
+  toilet: number;
+  parking: number;
 }
