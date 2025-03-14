@@ -41,11 +41,12 @@ export default function Page() {
     if (file) {
       const storageRef = ref(storage, `course-image-test/${file.name}`);
       await uploadBytes(storageRef, file);
-      const imageUrl = await URL.createObjectURL(file);
+      const url = await getDownloadURL(storageRef);
+      // const imageUrl = await URL.createObjectURL(file);
       setForm((prev) => ({
         ...prev,
         image: file,
-        imageUrl: imageUrl,
+        imageUrl: url,
       }));
 
       console.log("file uploaded successfully");
