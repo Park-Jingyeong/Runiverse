@@ -7,20 +7,24 @@ import Image from "next/image";
 import KakaoMaps from "@/components/kakaoMaps";
 import LocationPointInput from "@/components/input/loactionPointInput";
 import CourseInfoInput from "@/components/input/courseInfoInput";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { storage } from "@/lib/firebase";
 
 export default function Page() {
   const [form, setForm] = useState({
     name: "",
     distance: "",
-    difficulty: "",
     slope: 0,
     pavement: 0,
     complexity: 0,
     toilet: null,
     parking: null,
+    image: null as File | null,
+    imageUrl: "",
   });
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const [uploadedUrl, setUploadedUrl] = useState("");
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -30,6 +34,25 @@ export default function Page() {
       ...prev,
       [name]: value,
     }));
+  };
+
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    console.log(file);
+    if (file) {
+      const storageRef = ref(storage, `course-image-test/${file.name}`);
+      await uploadBytes(storageRef, file);
+      const url = await getDownloadURL(storageRef);
+      setForm((prev) => ({
+        ...prev,
+        image: file,
+        imageUrl: url,
+      }));
+      const previewUrl = URL.createObjectURL(file);
+      setUploadedUrl(previewUrl);
+      console.log("file uploaded successfully");
+      console.log(uploadedUrl);
+    }
   };
 
   const handleGradientChange = (
@@ -62,7 +85,6 @@ export default function Page() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "코스 등록 실패");
-
       setMessage("코스 등록 성공");
     } catch (error) {
       setMessage("코스 등록 오류");
@@ -71,7 +93,6 @@ export default function Page() {
       setLoading(false);
     }
   };
-  
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -108,10 +129,28 @@ export default function Page() {
             </div>
             <div className="flex flex-col gap-2">
               <h2 className="text-xl font-bold">이미지를 첨부해주세요.</h2>
-              {/* @TODO - 이미지 첨부 구현 */}
-              <button className="w-[140px] h-[140px] border-2 rounded-xl">
-                <Image src={add_48} alt="add image" className="m-auto" />
-              </button>
+              {/* @TODO - 이미지 첨부 Preview 수정 */}
+              <label className="border-2 rounded-xl w-[140px] h-[140px] cursor-pointer flex">
+                {form.image ? (
+                  <div>
+                    <Image
+                      src={uploadedUrl}
+                      alt="preview"
+                      width={100}
+                      height={100}
+                      className="w-full h-full object-cover rounded-xl m-auto"
+                    />
+                  </div>
+                ) : (
+                  <Image src={add_48} alt="add image" className="m-auto" />
+                )}
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={handleImageChange}
+                />
+              </label>
               <div className="text-sm text-[#737373]">
                 러닝 기록 캡쳐 사진도 좋아요!
               </div>
