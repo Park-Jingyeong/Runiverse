@@ -7,8 +7,8 @@ import pin_gray_24 from "@/../public/pin_gray_24.svg";
 import flag_30 from "@/../public/flag_30.svg";
 import flag_fill_30 from "@/../public/flag_fill_30.svg";
 import share from "@/../public/share.svg";
-import distance_black_20 from "@/../public/distance_black_20.svg";
-import like from "@/../public/like.svg";
+import distance_20 from "@/../public/distance_20.svg";
+import recommend_24 from "@/../public/recommend_24.svg";
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { Course } from "@/types/course";
@@ -94,12 +94,12 @@ export default function Page() {
         </div>
         <div className="flex h-12 border-2 rounded-xl">
           <div className="flex gap-1 w-1/2 justify-center items-center border-r-2">
-            <Image src={distance_black_20} alt="distance" />
+            <Image src={distance_20} alt="distance" />
             <div>{course.distance}km</div>
           </div>
           <button className="flex gap-1 w-1/2 justify-center items-center">
             {/* @TODO - 아이콘 변경 */}
-            <Image src={like} alt="like" />
+            <Image src={recommend_24} alt="like" />
             <div>추천해요</div>
           </button>
         </div>
