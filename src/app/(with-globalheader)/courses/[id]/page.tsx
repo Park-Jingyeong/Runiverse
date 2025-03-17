@@ -7,8 +7,8 @@ import pin_gray_24 from "@/../public/pin_gray_24.svg";
 import flag_30 from "@/../public/flag_30.svg";
 import flag_fill_30 from "@/../public/flag_fill_30.svg";
 import share from "@/../public/share.svg";
-import distance_black_20 from "@/../public/distance_black_20.svg";
-import like from "@/../public/like.svg";
+import distance_20 from "@/../public/distance_20.svg";
+import recommend_24 from "@/../public/recommend_24.svg";
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { Course } from "@/types/course";
@@ -60,9 +60,8 @@ export default function Page() {
 
   console.log(course.imageUrl);
   return (
-    <div className="flex flex-col gap-8">
-      {/* @TODO - 이미지 렌더링 */}
-      <div className="w-[600px] h-[400px] relative left-[-16px] overflow-hidden">
+    <div>
+      <div className="w-[600px] h-[400px] relative left-[-16px] top-[-16px] overflow-hidden">
         <Image
           src={course.imageUrl}
           alt="course image"
@@ -70,82 +69,96 @@ export default function Page() {
           className="object-cover"
         />
       </div>
-      <div className="flex flex-col gap-6">
-        <div className="flex justify-between">
-          <div className="flex flex-col gap-2">
-            <h1 className="font-bold text-2xl">{course.name}</h1>
-            <div className="flex gap-1">
-              <Image src={pin_gray_24} alt="location" />
-              <div className="text-[#737373] text-base">{course.location}</div>
+      <div className="flex flex-col gap-8">
+        <div className="flex flex-col gap-6">
+          <div className="flex justify-between">
+            <div className="flex flex-col gap-2">
+              <h1 className="font-bold text-2xl">{course.name}</h1>
+              <div className="flex gap-1">
+                <Image src={pin_gray_24} alt="location" />
+                <div className="text-[#737373] text-base">
+                  {course.location}
+                </div>
+              </div>
+            </div>
+            <div className="flex items-start">
+              <button onClick={toggleBookMark}>
+                {isBookMarked ? (
+                  <Image src={flag_fill_30} alt="bookmark active" />
+                ) : (
+                  <Image src={flag_30} alt="bookmark" />
+                )}
+              </button>
+              <button className="p-[2px]">
+                <Image src={share} alt="share" />
+              </button>
             </div>
           </div>
-          <div className="flex items-start">
-            <button onClick={toggleBookMark}>
-              {isBookMarked ? (
-                <Image src={flag_fill_30} alt="bookmark active" />
-              ) : (
-                <Image src={flag_30} alt="bookmark" />
-              )}
-            </button>
-            <button className="p-[2px]">
-              <Image src={share} alt="share" />
+          <div className="flex h-12 border-2 rounded-xl">
+            <div className="flex gap-1 w-1/2 justify-center items-center border-r-2">
+              <Image src={distance_20} alt="distance" />
+              <div>{course.distance}km</div>
+            </div>
+            <button className="flex gap-1 w-1/2 justify-center items-center">
+              <Image src={recommend_24} alt="like" />
+              <div>추천해요</div>
             </button>
           </div>
         </div>
-        <div className="flex h-12 border-2 rounded-xl">
-          <div className="flex gap-1 w-1/2 justify-center items-center border-r-2">
-            <Image src={distance_black_20} alt="distance" />
-            <div>{course.distance}km</div>
-          </div>
-          <button className="flex gap-1 w-1/2 justify-center items-center">
-            {/* @TODO - 아이콘 변경 */}
-            <Image src={like} alt="like" />
-            <div>추천해요</div>
-          </button>
-        </div>
-      </div>
 
-      <div>
-        <h2 className="font-bold text-xl">예상 소요 시간</h2>
-        <Calculator distance={course.distance} />
-      </div>
-      <div className="flex flex-col gap-6">
         <div>
-          <h2 className="font-bold text-xl">난이도</h2>
-          {course.difficulty}
+          <h2 className="font-bold text-xl">예상 소요 시간</h2>
+          <Calculator distance={course.distance} />
         </div>
-        <div>
-          <GradientBar
-            title="고도"
-            value={["평지", "완만한 언덕", "가파른 언덕"]}
-            state={course.slope}
-          />
+        <div className="flex flex-col gap-6">
+          <div>
+            <h2 className="font-bold text-xl">난이도</h2>
+            {course.difficulty}
+          </div>
+          <div>
+            <GradientBar
+              title="고도"
+              value={["평지", "완만한 언덕", "가파른 언덕"]}
+              state={course.slope}
+            />
+          </div>
+          <div>
+            <GradientBar
+              title="도로 유형"
+              value={["포장 도로", "혼합", "비포장 도로"]}
+              state={course.pavement}
+            />
+          </div>
+          <div>
+            <GradientBar
+              title="복잡도"
+              value={["직선 코스", "S자 코스", "다양한 갈래길"]}
+              state={course.complexity}
+            />
+          </div>
+          <div>
+            <FacilityInfo toilet={course.toilet} parking={course.parking} />
+          </div>
         </div>
-        <div>
-          <GradientBar
-            title="도로 유형"
-            value={["포장 도로", "혼합", "비포장 도로"]}
-            state={course.pavement}
-          />
-        </div>
-        <div>
-          <GradientBar
-            title="복잡도"
-            value={["직선 코스", "S자 코스", "다양한 갈래길"]}
-            state={course.complexity}
-          />
-        </div>
-        <div>
-          <FacilityInfo toilet={course.toilet} parking={course.parking} />
-        </div>
-      </div>
-      <div className="flex flex-col gap-4">
-        <h2 className="font-bold text-xl">지도</h2>
-        <KakaoMaps />
-        <div>
-          <div>출발</div>
-          <div>경유</div>
-          <div>도착</div>
+        <div className="flex flex-col gap-4">
+          <h2 className="font-bold text-xl">지도</h2>
+          <div className="flex flex-col gap-2">
+            <KakaoMaps />
+            <div className="flex flex-col gap-2">
+              <div className="flex border-2 rounded-xl">
+                <div className="text-lg p-3 border-r-2">출발</div>
+                <div></div>
+              </div>
+              <div className="flex border-2 rounded-xl">
+                <div className="text-lg p-3 border-r-2">경유</div>
+                <div></div>
+              </div>
+              <div className="flex border-2 rounded-xl">
+                <div className="text-lg p-3 border-r-2">도착</div>
+                <div></div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
