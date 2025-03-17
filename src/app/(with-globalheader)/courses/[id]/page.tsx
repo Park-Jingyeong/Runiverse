@@ -58,7 +58,6 @@ export default function Page() {
     return <div className="text-center my-5">코스 정보 로딩 중...</div>;
   }
 
-  console.log(course.imageUrl);
   return (
     <div>
       <div className="w-[600px] h-[400px] relative left-[-16px] top-[-16px] overflow-hidden">
