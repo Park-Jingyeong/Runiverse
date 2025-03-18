@@ -14,8 +14,9 @@ export default function SearchResult() {
       if (!q) return;
 
       try {
-        const response = await fetch(`
-            ${process.env.NEXT_PUBLIC_BASE_URL}/api/courses/`);
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/courses/`
+        );
         const data: Course[] = await response.json();
 
         const filteredData = data.filter((course) =>

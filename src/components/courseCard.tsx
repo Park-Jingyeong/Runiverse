@@ -17,7 +17,9 @@ export default function CourseCard({ course }: { course: Course }) {
     setIsBookMarked(!isBookMarked);
   };
 
-  console.log(course.imageUrl);
+  console.log(course);
+  console.log(course.imageUrls?.[0]);
+
   return (
     <div className="max-w-[568px] h-[150px] flex rounded-xl overflow-hidden mb-2">
       <Link
@@ -25,7 +27,7 @@ export default function CourseCard({ course }: { course: Course }) {
         href={`/courses/${course.id}`}
       >
         <Image
-          src={course.imageUrl}
+          src={course.imageUrls?.[0]}
           alt="background image"
           style={{ objectFit: "cover" }}
           fill

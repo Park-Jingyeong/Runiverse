@@ -9,5 +9,5 @@ export interface Course {
   complexity: number;
   toilet: number;
   parking: number;
-  imageUrl: string;
+  imageUrls: string[];
 }

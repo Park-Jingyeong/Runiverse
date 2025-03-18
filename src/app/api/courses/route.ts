@@ -14,7 +14,7 @@ export async function POST(req: Request) {
     const body = await req.json();
     console.log("받은 코스 데이터:", body);
 
-    if (!body.name || !body.distance) {
+    if (!body.name || !body.distance || !body.imageUrls) {
       return NextResponse.json({ error: "필수 입력값 부족" }, { status: 400 });
     }
     const courseRef = await addDoc(collection(db, "courses"), {
@@ -25,7 +25,7 @@ export async function POST(req: Request) {
       pavement: body.pavement,
       complexity: body.complexity,
       image: body.image,
-      imageUrl: body.imageUrl,
+      imageUrls: body.imageUrls,
       toilet: body.toilet,
       parking: body.parking,
       // createdAt: Timestamp.now(),

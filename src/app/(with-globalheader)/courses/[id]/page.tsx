@@ -58,12 +58,13 @@ export default function Page() {
     return <div className="text-center my-5">코스 정보 로딩 중...</div>;
   }
 
-  console.log(course.imageUrl);
+  console.log(course.imageUrls);
   return (
     <div>
       <div className="w-[600px] h-[400px] relative left-[-16px] top-[-16px] overflow-hidden">
+        {/* @TODO - 이미지 슬라이더 구현 */}
         <Image
-          src={course.imageUrl}
+          src={course.imageUrls?.[0]}
           alt="course image"
           fill
           className="object-cover"
