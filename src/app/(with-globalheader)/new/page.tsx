@@ -19,8 +19,8 @@ export default function Page() {
     complexity: 0,
     toilet: null,
     parking: null,
-    image: null as File | null,
-    imageUrl: "",
+    image: [] as File[],
+    imageUrls: [] as string[] | [""],
   });
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -28,7 +28,7 @@ export default function Page() {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
-    const { name, value, type } = e.target;
+    const { name, value } = e.target;
     setForm((prev) => ({
       ...prev,
       [name]: value,
@@ -36,17 +36,22 @@ export default function Page() {
   };
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    console.log(file);
-    if (file) {
-      const storageRef = ref(storage, `course-image-test/${file.name}`);
-      await uploadBytes(storageRef, file);
-      const url = await getDownloadURL(storageRef);
-      // const imageUrl = await URL.createObjectURL(file);
+    const files = e.target.files;
+    if (files && files.length > 0) {
+      const uploadedFiles = Array.from(files);
+      const urls: string[] = [];
+
+      for (const file of uploadedFiles) {
+        const storageRef = ref(storage, `course-image-test/${file.name}`);
+        await uploadBytes(storageRef, file);
+        const url = await getDownloadURL(storageRef);
+        urls.push(url);
+      }
+
       setForm((prev) => ({
         ...prev,
-        image: file,
-        imageUrl: url,
+        image: [...prev.image, ...uploadedFiles],
+        imageUrls: [...prev.imageUrls, ...urls],
       }));
 
       console.log("file uploaded successfully");
@@ -91,16 +96,17 @@ export default function Page() {
       setLoading(false);
     }
   };
+
   return (
     <div>
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col gap-10">
           <div className="flex flex-col gap-6">
-            <h1 className="text-xl font-bold text-center">
+            <h2 className="text-xl font-bold text-center">
               러닝 코스를 등록해볼까요?
-            </h1>
+            </h2>
             <div className="flex flex-col gap-2">
-              <h2 className="text-xl font-bold">코스명</h2>
+              <h3 className="text-xl font-bold">코스명</h3>
               <input
                 className="w-full h-[50px] border-2 rounded-xl p-4"
                 type="text"
@@ -111,9 +117,9 @@ export default function Page() {
               />
             </div>
             <div className="flex flex-col gap-2">
-              <h2 className="text-xl font-bold">총 거리</h2>
+              <h3 className="text-xl font-bold">총 거리</h3>
               <div className="flex gap-2 items-end">
-                {/* @TODO 거리 숫자값 변경 필요 */}
+                {/* @TODO - 거리 숫자값 변경 필요 */}
                 <input
                   className="w-full h-[50px] border-2 rounded-xl p-4"
                   type="text"
@@ -126,38 +132,40 @@ export default function Page() {
               </div>
             </div>
             <div className="flex flex-col gap-2">
-              <h2 className="text-xl font-bold">이미지를 첨부해주세요.</h2>
-              {/* @TODO - 이미지 첨부 Preview 수정 */}
-              <label className="border-2 rounded-xl w-[140px] h-[140px] cursor-pointer flex">
-                {form.image ? (
-                  <div>
+              <h3 className="text-xl font-bold">이미지를 첨부해주세요.</h3>
+              {/* @TODO - 이미지 첨부 수정 - 최대 3장, 용량 제한 */}
+              <div className="flex gap-2 flex-wrap">
+                {form.imageUrls.map((url, index) => (
+                  <div key={index} className="relative border-2 rounded-xl">
                     <Image
-                      src={form.imageUrl}
-                      alt="preview"
-                      width={400}
-                      height={300}
-                      className="w-full h-full object-cover rounded-xl m-auto"
+                      src={url}
+                      alt={`코스 이미지-${index}`}
+                      width={140}
+                      height={140}
+                      className="w-[140px] h-[140px] object-cover rounded-xl m-auto"
                     />
                   </div>
-                ) : (
+                ))}
+                <label className="border-2 rounded-xl w-[140px] h-[140px] cursor-pointer flex">
                   <Image src={add_48} alt="add image" className="m-auto" />
-                )}
-                <input
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  onChange={handleImageChange}
-                />
-              </label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    className="hidden"
+                    onChange={handleImageChange}
+                  />
+                </label>
+              </div>
               <div className="text-sm text-[#737373]">
                 러닝 기록 캡쳐 사진도 좋아요!
               </div>
             </div>
           </div>
           <div className="flex flex-col gap-6">
-            <h1 className="text-xl font-bold text-center">
+            <h2 className="text-xl font-bold text-center">
               코스의 경로를 입력해주세요.
-            </h1>
+            </h2>
             {/* @TODO - 지도 */}
             <KakaoMaps />
             <LocationPointInput />
