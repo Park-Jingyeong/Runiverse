@@ -29,7 +29,7 @@ export default function SearchBar() {
     }
   };
   return (
-    <div className="rounded-xl flex justify-between p-3 bg-opacity-70 shadow-[0_8px_10px_0_rgba(0,0,0,0.15)]">
+    <div className="rounded-xl flex justify-between p-3 opacity-80 shadow-[0_8px_10px_0_rgba(0,0,0,0.15)]">
       <input
         value={search}
         onChange={onChangeInput}
