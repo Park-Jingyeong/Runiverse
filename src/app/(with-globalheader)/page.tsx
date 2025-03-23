@@ -2,10 +2,14 @@
 
 import Link from "next/link";
 import SearchBar from "@/components/searchBar";
+import { Suspense } from "react";
 export default function Home() {
   return (
     <div>
-      <SearchBar />
+      <Suspense fallback={<p className="text-center py-5">불러오는 중...</p>}>
+        <SearchBar />
+      </Suspense>
+
       <div className="flex flex-col gap-8">
         <Link href={"/new"}>
           <button className="text-lg bg-[#4BB7D4] text-white rounded-lg p-2">
