@@ -23,7 +23,7 @@ export default function KakaoMaps() {
 
   return (
     <div>
-      <div ref={mapRef} className="w-full h-80" />
+      <div ref={mapRef} className="w-full h-[320px] " />
     </div>
   );
 }

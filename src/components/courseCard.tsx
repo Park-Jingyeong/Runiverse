@@ -8,7 +8,6 @@ import flag_fill_30 from "@/../public/flag_fill_30.svg";
 import pin_20 from "@/../public/pin_20.svg";
 import star_fill_20 from "@/../public/star_fill_20.svg";
 import distance_20 from "@/../public/distance_20.svg";
-import bg1 from "@/../public/bg1.jpg";
 import { Course } from "@/types/course";
 
 export default function CourseCard({ course }: { course: Course }) {
@@ -25,7 +24,7 @@ export default function CourseCard({ course }: { course: Course }) {
         href={`/courses/${course.id}`}
       >
         <Image
-          src={bg1}
+          src={course.imageUrls?.[0]}
           alt="background image"
           style={{ objectFit: "cover" }}
           fill

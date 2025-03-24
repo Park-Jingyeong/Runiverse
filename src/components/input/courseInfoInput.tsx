@@ -35,11 +35,12 @@ export default function CourseInfoInput({
     setParking(value);
     onChangeParking(value);
   };
+
   return (
     <div className="flex flex-col gap-6">
-      <h1 className="text-xl font-bold text-center">
+      <h2 className="text-xl font-bold text-center">
         코스의 난이도는 어땠나요?
-      </h1>
+      </h2>
       <div className="flex justify-around">
         <button>
           <Image src={star_empty_28} alt="difficulty" />
@@ -58,7 +59,7 @@ export default function CourseInfoInput({
         </button>
       </div>
       <div className="flex flex-col gap-2">
-        <h2 className="text-lg font-bold">고도</h2>
+        <h3 className="text-lg font-bold">고도</h3>
         <div>
           <GradientInput
             value={["평지", "완만한 언덕", "가파른 언덕"]}
@@ -67,7 +68,7 @@ export default function CourseInfoInput({
         </div>
       </div>
       <div className="flex flex-col gap-2">
-        <h2 className="text-lg font-bold">도로 유형</h2>
+        <h3 className="text-lg font-bold">도로 유형</h3>
         <div>
           <GradientInput
             value={["포장 도로", "혼합", "비포장 도로"]}
@@ -76,7 +77,7 @@ export default function CourseInfoInput({
         </div>
       </div>
       <div className="flex flex-col gap-2">
-        <h2 className="text-lg font-bold">복잡도</h2>
+        <h3 className="text-lg font-bold">복잡도</h3>
         <div>
           <GradientInput
             value={["직선 코스", "S자 커브", "다양한 갈래길"]}
@@ -85,7 +86,7 @@ export default function CourseInfoInput({
         </div>
       </div>
       <div className="flex flex-col gap-2">
-        <h2 className="text-lg font-bold">편의 시설</h2>
+        <h3 className="text-lg font-bold">편의 시설</h3>
         <div className="flex justify-between items-center">
           <div>화장실</div>
           <div className="flex gap-2">

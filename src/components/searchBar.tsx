@@ -1,6 +1,6 @@
 // src/components/searchbar.tsx
 "use client";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import icon_search from "@/../public/search.svg";
 import Image from "next/image";
@@ -8,10 +8,11 @@ import Image from "next/image";
 export default function SearchBar() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const pathname = usePathname();
+
   const [search, setSearch] = useState("");
 
   const q = searchParams.get("q") || "";
-
   useEffect(() => {
     setSearch(q || "");
   }, [q]);
@@ -19,17 +20,23 @@ export default function SearchBar() {
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   };
+
   const onSubmit = () => {
     if (!search || q === search) return;
-    router.push(`/search?q=${search}`);
+    if (pathname === "/map") {
+      router.push(`/map?q=${search}`);
+    } else {
+      router.push(`/search?q=${search}`);
+    }
   };
+
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       onSubmit();
     }
   };
   return (
-    <div className="rounded-xl flex justify-between p-3 bg-opacity-70 shadow-[0_8px_10px_0_rgba(0,0,0,0.15)]">
+    <div className="rounded-xl flex justify-between p-3 opacity-80 shadow-[0_8px_10px_0_rgba(0,0,0,0.15)]">
       <input
         value={search}
         onChange={onChangeInput}
