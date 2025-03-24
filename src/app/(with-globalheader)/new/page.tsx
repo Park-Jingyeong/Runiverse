@@ -24,7 +24,6 @@ export default function Page() {
   });
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-  const [uploadedUrl, setUploadedUrl] = useState("");
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
