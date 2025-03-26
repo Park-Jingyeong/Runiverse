@@ -9,7 +9,7 @@ type Waypoint = { id: number; value: string };
 
 export default function LoactionPointInput() {
   const [wayInputs, setWayInput] = useState<Waypoint[]>([{ id: 1, value: "" }]);
-
+  const [keyword, setKeyword] = useState("");
   const addWayInput = () => {
     setWayInput([...wayInputs, { id: Date.now(), value: "" }]);
   };
@@ -25,16 +25,25 @@ export default function LoactionPointInput() {
     );
   };
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setKeyword(e.target.value);
+  };
+  const onClickSearch = (e: React.MouseEvent<HTMLElement>) => {};
+
   return (
     <div className="flex flex-col gap-6">
       <div>
         <h2 className="text-lg mb-1">출발지</h2>
         <div className="flex gap-2">
           <input
+            onChange={handleInputChange}
             placeholder="시작하는 지점을 입력해주세요."
             className="h-[50px] border-2 rounded-xl p-4 flex-1"
           />
-          <button className="h-[50px] rounded-xl bg-[#4BB7D4] text-white w-20 font-bold">
+          <button
+            onClick={onClickSearch}
+            className="h-[50px] rounded-xl bg-[#4BB7D4] text-white w-20 font-bold"
+          >
             찾기
           </button>
         </div>
@@ -44,10 +53,14 @@ export default function LoactionPointInput() {
         <h2 className="text-lg mb-1">도착지</h2>
         <div className="flex gap-2">
           <input
+            onChange={handleInputChange}
             placeholder="도착하는 지점을 입력해주세요."
             className="h-[50px] border-2 rounded-xl p-4 flex-1"
           />
-          <button className="h-[50px] rounded-xl bg-[#4BB7D4] text-white w-20 font-bold">
+          <button
+            onClick={onClickSearch}
+            className="h-[50px] rounded-xl bg-[#4BB7D4] text-white w-20 font-bold"
+          >
             찾기
           </button>
         </div>
