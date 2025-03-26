@@ -1,5 +1,5 @@
 // src/app/api/courses/route.ts
-import { db } from "@/lib/firebase";
+import { storage, db } from "@/lib/firebase";
 import {
   doc,
   getDocs,
