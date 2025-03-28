@@ -4,7 +4,7 @@
 import { useEffect, useState } from "react";
 import { Course } from "@/types/course";
 const useRandomCourse = () => {
-  const [randomCourse, setRandomCourse] = useState<Course>();
+  const [randomCourse, setRandomCourse] = useState<Course | null>(null);
   useEffect(() => {
     const fetchData = async () => {
       try {
