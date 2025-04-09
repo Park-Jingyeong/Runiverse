@@ -100,7 +100,14 @@ export default function Page() {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form
+        onSubmit={handleSubmit}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+          }
+        }}
+      >
         <div className="flex flex-col gap-10">
           <div className="flex flex-col gap-6">
             <h2 className="text-xl font-bold text-center">

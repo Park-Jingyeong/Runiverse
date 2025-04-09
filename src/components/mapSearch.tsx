@@ -9,7 +9,7 @@ declare global {
 }
 
 export default function MapSearch() {
-  const [map, setMap] = useState<any>(null)
+  const [map, setMap] = useState<any>(null);
   const [keyword, setKeyword] = useState("");
   const mapRef = useRef<HTMLDivElement>(null);
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,13 +26,14 @@ export default function MapSearch() {
         };
 
         const map = new window.kakao.maps.Map(mapContainer, mapOption);
-        setMap(map)
+        setMap(map);
       });
-    }
+    };
     onLoadKakaoMap();
   }, []);
 
-  const handleSearch = () => {
+  const handleSearch = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     const infowindow = new window.kakao.maps.InfoWindow({ zIndex: 1 });
 
     const ps = new window.kakao.maps.services.Places();
@@ -70,7 +71,9 @@ export default function MapSearch() {
     <div>
       <div>
         <input onChange={onChangeInput} value={keyword} className="border-2" />
-        <button onClick={handleSearch}>검색</button>
+        <button type="button" onClick={handleSearch}>
+          검색
+        </button>
       </div>
       <div ref={mapRef} className="w-full h-[320px]" />
     </div>
