@@ -9,6 +9,7 @@ import LocationPointInput from "@/components/input/loactionPointInput";
 import CourseInfoInput from "@/components/input/courseInfoInput";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "@/lib/firebase";
+import MapSearch from "@/components/mapSearch";
 
 export default function Page() {
   const [form, setForm] = useState({
@@ -168,6 +169,7 @@ export default function Page() {
             </h2>
             {/* @TODO - 지도 */}
             <KakaoMaps />
+            <MapSearch />
             <LocationPointInput />
           </div>
           <div className="flex flex-col gap-6">
