@@ -8,13 +8,18 @@ declare global {
   }
 }
 
+type MapSearchProps = {
+  setLocation: (value: string) => void;
+  location: string;
+};
+
 // 1. 키워드로 장소 검색하기
 // 2. 좌표로 주소 얻어내기
-export default function MapSearch() {
+export default function MapSearch({ setLocation, location }: MapSearchProps) {
   const [map, setMap] = useState<any>(null);
   const [keyword, setKeyword] = useState("");
   const [marker, setMarker] = useState<any>();
-  const [clicked, setClicked] = useState("");
+  // const [location, setLocation] = useState("");
   const mapRef = useRef<HTMLDivElement>(null);
   const infowindowRef = useRef<any>(null); // infowindow 재사용을 위한 ref
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -81,7 +86,7 @@ export default function MapSearch() {
           function (result: any, status: any) {
             if (status === window.kakao.maps.services.Status.OK) {
               const address = result[0].address.address_name;
-              setClicked(address);
+              setLocation(address);
               // 마커 위치 재설정
               marker.setMap(null);
               marker.setPosition(mouseEvent.latLng);
@@ -199,7 +204,7 @@ export default function MapSearch() {
             place.place_name +
             "</div>"
         );
-        setClicked(place.place_name);
+        setLocation(place.place_name);
         infowindow.open(map, marker);
       });
     }
@@ -214,7 +219,7 @@ export default function MapSearch() {
         </button>
       </div>
       <div ref={mapRef} className="w-full h-[320px]" />
-      <div>위치 {clicked}</div>
+      <div>위치 {location}</div>
     </div>
   );
 }

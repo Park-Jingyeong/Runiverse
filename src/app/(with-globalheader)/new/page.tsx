@@ -12,6 +12,7 @@ import { storage } from "@/lib/firebase";
 import MapSearch from "@/components/mapSearch";
 
 export default function Page() {
+  const [location, setLocation] = useState("");
   const [form, setForm] = useState({
     name: "",
     distance: "",
@@ -176,7 +177,7 @@ export default function Page() {
             </h2>
             {/* @TODO - 지도 */}
             <KakaoMaps />
-            <MapSearch />
+            <MapSearch setLocation={setLocation} location={location} />
             <LocationPointInput />
           </div>
           <div className="flex flex-col gap-6">
