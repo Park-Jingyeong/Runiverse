@@ -11,15 +11,21 @@ declare global {
 type MapSearchProps = {
   setLocation: (value: string) => void;
   location: string;
+  region: [string, string, string];
+  setRegion: (value: [string, string, string]) => void;
 };
 
 // 1. 키워드로 장소 검색하기
 // 2. 좌표로 주소 얻어내기
-export default function MapSearch({ setLocation, location }: MapSearchProps) {
+export default function MapSearch({
+  setLocation,
+  location,
+  region,
+  setRegion,
+}: MapSearchProps) {
   const [map, setMap] = useState<any>(null);
   const [keyword, setKeyword] = useState("");
   const [marker, setMarker] = useState<any>();
-  // const [location, setLocation] = useState("");
   const mapRef = useRef<HTMLDivElement>(null);
   const infowindowRef = useRef<any>(null); // infowindow 재사용을 위한 ref
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -68,97 +74,47 @@ export default function MapSearch({ setLocation, location }: MapSearchProps) {
       map,
       "click",
       function (mouseEvent: any) {
-        // 주소-좌표 변환 객체 생성
+        // Geocoder 주소-좌표 변환 객체 생성
         const geocoder = new window.kakao.maps.services.Geocoder();
-
-        // 클릭한 위치에 대한 주소를 표시할 인포윈도우
-        // const infowindow = new window.kakao.maps.InfoWindow({ zIndex: 1 });
-
-        // 현재 지도 중심 좌표로 주소를 검색해서 지도 좌측 상단에 표시 (행정구역 정보?)
-        // searchAddrFromCoords(map.getCenter(), displayCenterInfo);
 
         const latLng = mouseEvent.latLng;
 
         if (!latLng) return;
+        // services.Geocoder
+
+        // geocoder.coord2Address: 좌표값에 해당하는 주소 정보 요청
         geocoder.coord2Address(
           latLng.getLng(),
           latLng.getLat(),
           function (result: any, status: any) {
             if (status === window.kakao.maps.services.Status.OK) {
+              // address.address_name: 지번 주소
+              // road_address.address_name: 도로명 주소
+              // 지번 주소와 도로명 주소 섞여서 나오기도 함
               const address = result[0].address.address_name;
+              const region1 = String(result[0].address.region_1depth_name);
+              const region2 = String(result[0].address.region_2depth_name);
+              const region3 = String(result[0].address.region_3depth_name);
               setLocation(address);
+              setRegion([region1, region2, region3]);
               // 마커 위치 재설정
               marker.setMap(null);
               marker.setPosition(mouseEvent.latLng);
               marker.setMap(map);
               // 인포윈도우 닫고 다시 열기
               infowindowRef.current.close();
-              infowindowRef.current.setContent(address);
+              infowindowRef.current.setContent(
+                '<div style="padding:5px;font-size:12px;">' + address + "</div>"
+              );
               infowindowRef.current.open(map, marker);
             }
           }
         );
-
-        // searchDetailAddrFromCoords(
-        //   mouseEvent.latLng,
-        //   function (result: any, status: any) {
-        //     if (status === window.kakao.maps.services.Status.OK) {
-        //       const detailAddr = !!result[0].road_address
-        //         ? "<div>도로명 주소 : " +
-        //           result[0].road_address.address_name +
-        //           "</div>" +
-        //           "<div>지번 주소 : " +
-        //           result[0].address.address_name +
-        //           "</div>"
-        //         : "";
-        //       const content =
-        //         '<div class="bAddr">' +
-        //         '<span class="title">법정동 주소정보</span>' +
-        //         detailAddr +
-        //         "</div>";
-
-        //       // 마커를 클릭한 위치에 표시
-        //       marker.setPosition(mouseEvent.latLng);
-        //       marker.setMap(map);
-
-        //       // 인포윈도우에 클릭한 위치에 대한 법정동 상세 주소 정보 표시
-        //       infowindow.setContent(content);
-        //       infowindow.open(map, marker);
-        //     }
-        //   }
-        // );
       }
     );
-
-    // window.kakao.maps.event.addListener(map, "idle", function () {
-    //   searchAddrFromCoords(map.getCenter(), displayCenterInfo);
-    // });
-
-    // function searchAddrFromCoords(coords: any, callback: any) {
-    //   // 좌표로 행정동 주소 정보를 요청
-    //   geocoder.coord2RegionCode(coords.getLng(), coords.getLat(), callback);
-    // }
-    // function searchDetailAddrFromCoords(coords: any, callback: any) {
-    //   // 좌표로 법정동 상세 주소 정보를 요청
-    //   geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
-    // }
-
-    // function displayCenterInfo(result: any, status: any) {
-    //   if (status === window.kakao.maps.services.Status.OK) {
-    //     const infoDiv = document.getElementById("centerAddr");
-
-    //     for (let i = 0; i < result.length; i++) {
-    //       // 행정동의 region_type 값은 'H'
-    //       if (result[i].region_type === "H") {
-    //         infoDiv.innerHTML = result[i].address_name;
-    //         break;
-    //       }
-    //     }
-    //   }
-    // }
   }, [map]);
 
-  // 주소 검색 구현
+  // 키워드 검색 구현
   const handleSearch = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
@@ -196,15 +152,28 @@ export default function MapSearch({ setLocation, location }: MapSearchProps) {
       });
       // 마커에 클릭 이벤트 등록
       window.kakao.maps.event.addListener(marker, "click", function () {
+        const lat = place.y;
+        const lng = place.x;
+
+        const geocoder = new window.kakao.maps.services.Geocoder();
+        geocoder.coord2Address(lng, lat, function (result: any, status: any) {
+          if (status === window.kakao.maps.services.Status.OK) {
+            const address = result[0].address.address_name;
+            const region1 = result[0].address.region_1depth_name;
+            const region2 = result[0].address.region_2depth_name;
+            const region3 = result[0].address.region_3depth_name;
+            setLocation(address);
+            setRegion([region1, region2, region3]);
+          }
+        });
         // 기존 인포윈도우 닫기
         infowindow.close();
-        // 마커를 클릭하면 장소명이 인포윈도우에 표출됨
         infowindow.setContent(
           '<div style="padding:5px;font-size:12px;">' +
             place.place_name +
             "</div>"
         );
-        setLocation(place.place_name);
+
         infowindow.open(map, marker);
       });
     }
@@ -220,6 +189,11 @@ export default function MapSearch({ setLocation, location }: MapSearchProps) {
       </div>
       <div ref={mapRef} className="w-full h-[320px]" />
       <div>위치 {location}</div>
+      <div>
+        행정구역 {region[0]} {region[1]}
+      </div>
     </div>
   );
 }
+
+// @TODO 검색 -> 임의 위치 클릭 (마커, 인포윈도우 생성) -> 검색 결과 마커 클릭 -> 임의 위치 마커 안사라짐
