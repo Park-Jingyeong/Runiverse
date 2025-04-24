@@ -33,7 +33,7 @@ export default function Home() {
       <div className="flex flex-col gap-8">
         <section>
           <div>
-            <div className="">
+            <div className="-mx-4">
               {randomCourse?.imageUrls?.[0] && (
                 <Image
                   src={randomCourse.imageUrls[0]}
