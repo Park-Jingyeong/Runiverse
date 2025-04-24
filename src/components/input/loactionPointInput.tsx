@@ -7,6 +7,7 @@ import remove_white_48 from "@/../public/remove_white_48.svg";
 
 type Waypoint = { id: number; value: string };
 
+// @TODO 찾기 button로 인한 form submit 방지 필요
 export default function LoactionPointInput() {
   // wayInputs -
   const [soInputs, setSOInput] = useState<Waypoint[]>([{ id: 1, value: "" }]);
