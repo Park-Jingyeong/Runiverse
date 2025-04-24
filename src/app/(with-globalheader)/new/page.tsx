@@ -7,10 +7,20 @@ import Image from "next/image";
 import KakaoMaps from "@/components/kakaoMaps";
 import LocationPointInput from "@/components/input/loactionPointInput";
 import CourseInfoInput from "@/components/input/courseInfoInput";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  StringFormat,
+} from "firebase/storage";
 import { storage } from "@/lib/firebase";
+import MapSearch from "@/components/mapSearch";
 
 export default function Page() {
+  // location: 위치에 대한 주소
+  const [location, setLocation] = useState("");
+  // region: 위치에 대한 행정구역 정보
+  const [region, setRegion] = useState<[string, string, string]>(["", "", ""]);
   const [form, setForm] = useState({
     name: "",
     distance: "",
@@ -24,7 +34,6 @@ export default function Page() {
   });
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -99,7 +108,14 @@ export default function Page() {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form
+        onSubmit={handleSubmit}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+          }
+        }}
+      >
         <div className="flex flex-col gap-10">
           <div className="flex flex-col gap-6">
             <h2 className="text-xl font-bold text-center">
@@ -167,7 +183,13 @@ export default function Page() {
               코스의 경로를 입력해주세요.
             </h2>
             {/* @TODO - 지도 */}
-            <KakaoMaps />
+            {/* <KakaoMaps /> */}
+            <MapSearch
+              setLocation={setLocation}
+              location={location}
+              region={region}
+              setRegion={setRegion}
+            />
             <LocationPointInput />
           </div>
           <div className="flex flex-col gap-6">
@@ -198,3 +220,5 @@ export default function Page() {
     </div>
   );
 }
+
+// 검색한 지도 위치에 대한 행정구역 정보 표시 필요

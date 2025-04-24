@@ -7,26 +7,33 @@ import remove_white_48 from "@/../public/remove_white_48.svg";
 
 type Waypoint = { id: number; value: string };
 
+// @TODO 찾기 button로 인한 form submit 방지 필요
 export default function LoactionPointInput() {
-  const [wayInputs, setWayInput] = useState<Waypoint[]>([{ id: 1, value: "" }]);
-  const [keyword, setKeyword] = useState("");
-  const addWayInput = () => {
-    setWayInput([...wayInputs, { id: Date.now(), value: "" }]);
+  // wayInputs -
+  const [soInputs, setSOInput] = useState<Waypoint[]>([{ id: 1, value: "" }]);
+  const [pointInput, setPointInput] = useState("");
+
+  // 경유지 input 추가
+  const addSOInput = () => {
+    setSOInput([...soInputs, { id: Date.now(), value: "" }]);
   };
-  const removeWayInput = (id: number) => {
-    setWayInput(wayInputs.filter((waypoint) => waypoint.id !== id));
+  // 경유지 input 제거
+  const removeSOInput = (id: number) => {
+    setSOInput(soInputs.filter((stopOver) => stopOver.id !== id));
   };
 
-  const handleChange = (id: number, value: string) => {
-    setWayInput(
-      wayInputs.map((waypoint) =>
-        waypoint.id === id ? { ...waypoint, value } : waypoint
+  // 경유지 StopOver input 값 change
+  const handleSOInputChange = (id: number, value: string) => {
+    setSOInput(
+      soInputs.map((stopOver) =>
+        stopOver.id === id ? { ...stopOver, value } : stopOver
       )
     );
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setKeyword(e.target.value);
+  // 출발지 도착지 Point input 값 change
+  const handlePointInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPointInput(e.target.value);
   };
   const onClickSearch = (e: React.MouseEvent<HTMLElement>) => {};
 
@@ -36,7 +43,7 @@ export default function LoactionPointInput() {
         <h2 className="text-lg mb-1">출발지</h2>
         <div className="flex gap-2">
           <input
-            onChange={handleInputChange}
+            onChange={handlePointInputChange}
             placeholder="시작하는 지점을 입력해주세요."
             className="h-[50px] border-2 rounded-xl p-4 flex-1"
           />
@@ -53,7 +60,7 @@ export default function LoactionPointInput() {
         <h2 className="text-lg mb-1">도착지</h2>
         <div className="flex gap-2">
           <input
-            onChange={handleInputChange}
+            onChange={handlePointInputChange}
             placeholder="도착하는 지점을 입력해주세요."
             className="h-[50px] border-2 rounded-xl p-4 flex-1"
           />
@@ -68,24 +75,26 @@ export default function LoactionPointInput() {
       <div>
         <h2 className="text-lg mb-1">경유지</h2>
         <div className="flex flex-col gap-2">
-          {wayInputs.map((waypoint, index) => (
-            <div key={waypoint.id} className="flex gap-2">
+          {soInputs.map((stopOver, index) => (
+            <div key={stopOver.id} className="flex gap-2">
               <input
                 placeholder="경유하는 지점이 있나요?"
                 className="h-[50px] border-2 rounded-xl p-4 flex-1"
-                onChange={(e) => handleChange(waypoint.id, e.target.value)}
+                onChange={(e) =>
+                  handleSOInputChange(stopOver.id, e.target.value)
+                }
               />
               {index === 0 ? (
                 <button
                   className="rounded-xl bg-[#4BB7D4]"
-                  onClick={addWayInput}
+                  onClick={addSOInput}
                 >
                   <Image src={add_white_48} alt="add input" />
                 </button>
               ) : (
                 <button
                   className="rounded-xl bg-[#4BB7D4]"
-                  onClick={() => removeWayInput(waypoint.id)}
+                  onClick={() => removeSOInput(stopOver.id)}
                 >
                   <Image src={remove_white_48} alt="remove input" />
                 </button>
