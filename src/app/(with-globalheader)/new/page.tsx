@@ -17,6 +17,8 @@ import { storage } from "@/lib/firebase";
 import MapSearch from "@/components/mapSearch";
 
 export default function Page() {
+  // locationPointInput에서의 point
+  const [point, setPoint] = useState("");
   // location: 위치에 대한 주소
   const [location, setLocation] = useState("");
   // region: 위치에 대한 행정구역 정보
@@ -184,13 +186,21 @@ export default function Page() {
             </h2>
             {/* @TODO - 지도 */}
             {/* <KakaoMaps /> */}
-            <MapSearch
+            {/* <MapSearch
+              point={point}
               setLocation={setLocation}
               location={location}
               region={region}
               setRegion={setRegion}
+            /> */}
+            <LocationPointInput
+              location={location}
+              setLocation={setLocation}
+              region={region}
+              setRegion={setRegion}
+              point={point}
+              setPoint={setPoint}
             />
-            <LocationPointInput />
           </div>
           <div className="flex flex-col gap-6">
             <CourseInfoInput
@@ -222,3 +232,8 @@ export default function Page() {
 }
 
 // 검색한 지도 위치에 대한 행정구역 정보 표시 필요
+
+// mapSearch에는 출발지와 도착지 두 개의 state 분리 - > 임시로 한 개
+// 출발지 검색 -> 찾기 -> 카카오 맵 검색 -> 마커로 위치 선택 -> 출발지의 location, region 저장
+// 도착지 검색 -> 찾기 -> 카카오 맵 검색 -> 마커로 위치 선택 -> 도착지의 location, region 저장
+// 코스 대표 location, region은 출발지 기준으로 저장
