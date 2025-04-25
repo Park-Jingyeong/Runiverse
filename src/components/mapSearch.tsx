@@ -6,7 +6,6 @@ import {
   useState,
   useImperativeHandle,
   forwardRef,
-  ForwardedRef,
 } from "react";
 
 declare global {
@@ -213,6 +212,8 @@ const MapSearch = forwardRef<MapSearchRefType, MapSearchProps>(
     );
   }
 );
+
+MapSearch.displayName = "MapSearch";
 
 export default MapSearch;
 // @TODO 검색 -> 임의 위치 클릭 (마커, 인포윈도우 생성) -> 검색 결과 마커 클릭 -> 임의 위치 마커 안사라짐
