@@ -20,6 +20,7 @@ export async function POST(req: Request) {
     const courseRef = await addDoc(collection(db, "courses"), {
       name: body.name,
       distance: body.distance,
+      region: body.region,
       // difficulty: body.difficulty,
       slope: body.slope,
       pavement: body.pavement,

@@ -24,9 +24,9 @@ export default function IndexCourseCard({ name, distance }: Props) {
         </div>
         <div className="w-[2px] h-[30px] bg-black rounded-[50px] opacity-1" />
         <div className="flex gap-1">
-          <Image src={pin_20} alt="location" />
+          <Image src={pin_20} alt="region" />
 
-          <div className="text-xl">location</div>
+          <div className="text-xl">region</div>
         </div>
       </div>
     </div>

@@ -17,6 +17,8 @@ export default function CourseCard({ course }: { course: Course }) {
     setIsBookMarked(!isBookMarked);
   };
 
+  console.log(course.region);
+
   return (
     <div className="max-w-[568px] h-[150px] flex rounded-xl overflow-hidden mb-2">
       <Link
@@ -38,7 +40,7 @@ export default function CourseCard({ course }: { course: Course }) {
             <div className="flex gap-1 items-center">
               <Image src={pin_20} alt="location" />
 
-              <h2>{course.location}</h2>
+              <h2>{course.region}</h2>
             </div>
           </Link>
           <button onClick={toggleBookMark}>
