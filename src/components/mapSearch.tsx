@@ -207,10 +207,10 @@ const MapSearch = forwardRef<MapSearchRefType, MapSearchProps>(
         <div ref={mapRef} className="w-full h-[320px]" />
         <div>위치 {address}</div>
         <div>
-          행정구역 {region[0]} {region[1]}
+          행정구역 {region[0]} {region[1]} {region[2]}
         </div>
         <div>
-          {point} {address} {region[0]} {region[1]}
+          장소명 {point}
         </div>
       </div>
     );

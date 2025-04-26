@@ -1,10 +1,9 @@
 // src/app/(with-globalheader)/new/page.tsx
 
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import add_48 from "@/../public/add_48.svg";
 import Image from "next/image";
-import KakaoMaps from "@/components/kakaoMaps";
 import LocationPointInput from "@/components/input/loactionPointInput";
 import CourseInfoInput from "@/components/input/courseInfoInput";
 import {
@@ -14,7 +13,6 @@ import {
   StringFormat,
 } from "firebase/storage";
 import { storage } from "@/lib/firebase";
-import MapSearch from "@/components/mapSearch";
 
 export default function Page() {
   // locationPointInput에서의 point
@@ -26,6 +24,7 @@ export default function Page() {
   const [form, setForm] = useState({
     name: "",
     distance: "",
+    region: ["", "", ""],
     slope: 0,
     pavement: 0,
     complexity: 0,
@@ -68,6 +67,13 @@ export default function Page() {
       console.log("file uploaded successfully");
     }
   };
+
+  useEffect(() => {
+    setForm((prev) => ({
+      ...prev,
+      region: region,
+    }));
+  }, [region]);
 
   const handleGradientChange = (
     key: "slope" | "pavement" | "complexity",

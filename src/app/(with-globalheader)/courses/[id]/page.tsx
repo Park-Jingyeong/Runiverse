@@ -76,9 +76,7 @@ export default function Page() {
               <h1 className="font-bold text-2xl">{course.name}</h1>
               <div className="flex gap-1">
                 <Image src={pin_gray_24} alt="location" />
-                <div className="text-[#737373] text-base">
-                  {course.location}
-                </div>
+                <div className="text-[#737373] text-base">{course.region}</div>
               </div>
             </div>
             <div className="flex items-start">

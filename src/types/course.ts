@@ -2,7 +2,7 @@ export interface Course {
   id: string;
   name: string;
   distance: number;
-  location?: string;
+  region: [string, string, string];
   difficulty?: string;
   slope: number;
   pavement: number;
