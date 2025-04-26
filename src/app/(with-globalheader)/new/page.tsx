@@ -19,8 +19,8 @@ import MapSearch from "@/components/mapSearch";
 export default function Page() {
   // locationPointInput에서의 point
   const [point, setPoint] = useState("");
-  // location: 위치에 대한 주소
-  const [location, setLocation] = useState("");
+  // address: 위치에 대한 주소
+  const [address, setAddress] = useState("");
   // region: 위치에 대한 행정구역 정보
   const [region, setRegion] = useState<[string, string, string]>(["", "", ""]);
   const [form, setForm] = useState({
@@ -184,18 +184,9 @@ export default function Page() {
             <h2 className="text-xl font-bold text-center">
               코스의 경로를 입력해주세요.
             </h2>
-            {/* @TODO - 지도 */}
-            {/* <KakaoMaps /> */}
-            {/* <MapSearch
-              point={point}
-              setLocation={setLocation}
-              location={location}
-              region={region}
-              setRegion={setRegion}
-            /> */}
             <LocationPointInput
-              location={location}
-              setLocation={setLocation}
+              address={address}
+              setAddress={setAddress}
               region={region}
               setRegion={setRegion}
               point={point}

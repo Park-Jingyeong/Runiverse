@@ -9,8 +9,8 @@ import MapSearch, { MapSearchRefType } from "../mapSearch";
 type Waypoint = { id: number; value: string };
 
 type LocationPointInputProps = {
-  location: string;
-  setLocation: (value: string) => void;
+  address: string;
+  setAddress: (value: string) => void;
   region: [string, string, string];
   setRegion: (value: [string, string, string]) => void;
   point: string;
@@ -20,8 +20,8 @@ type LocationPointInputProps = {
 export default function LoactionPointInput({
   point,
   setPoint,
-  location,
-  setLocation,
+  address,
+  setAddress,
   region,
   setRegion,
 }: LocationPointInputProps) {
@@ -66,8 +66,8 @@ export default function LoactionPointInput({
         <MapSearch
           ref={mapSearchRef}
           point={point}
-          setLocation={setLocation}
-          location={location}
+          setAddress={setAddress}
+          address={address}
           region={region}
           setRegion={setRegion}
         />
@@ -89,12 +89,12 @@ export default function LoactionPointInput({
             찾기
           </button>
         </div>
+        <div>주소 : {address}</div>
       </div>
 
       <div>
         <h2 className="text-lg mb-1">도착지</h2>
         <div className="flex gap-2">
-          
           {/* @TODO 도착지 onChange 변경 필요, 출발지, 도착지 state 분기 */}
           <input
             onChange={handlePointChange}
@@ -109,6 +109,7 @@ export default function LoactionPointInput({
             찾기
           </button>
         </div>
+        <div>주소 : </div>
       </div>
       <div>
         <h2 className="text-lg mb-1">경유지</h2>
@@ -144,3 +145,7 @@ export default function LoactionPointInput({
     </div>
   );
 }
+
+// input에 point 값 입력하고 찾기 버튼 클릭 -> 지도 검색 -> 위치 클릭
+// 1. 키워드 검색 해당되는 위치는 장소 이름 표시됨(place.place_name)
+// 2. 검색 해당되지 않는 위치 클릭하면 주소 표시됨(address -> location)

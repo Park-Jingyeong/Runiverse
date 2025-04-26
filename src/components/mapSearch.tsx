@@ -15,12 +15,13 @@ declare global {
 }
 
 type MapSearchProps = {
-  location: string;
-  setLocation: (value: string) => void;
+  address: string;
+  setAddress: (value: string) => void;
   region: [string, string, string];
   setRegion: (value: [string, string, string]) => void;
   point: string;
 };
+
 export type MapSearchRefType = {
   handleSearch: (point: string) => void;
 };
@@ -28,7 +29,7 @@ export type MapSearchRefType = {
 // 1. 키워드로 장소 검색하기
 // 2. 좌표로 주소 얻어내기
 const MapSearch = forwardRef<MapSearchRefType, MapSearchProps>(
-  ({ location, setLocation, region, setRegion, point }, ref) => {
+  ({ address, setAddress, region, setRegion, point }, ref) => {
     const [map, setMap] = useState<any>(null);
     const [keyword, setKeyword] = useState("");
     const [marker, setMarker] = useState<any>();
@@ -105,7 +106,7 @@ const MapSearch = forwardRef<MapSearchRefType, MapSearchProps>(
                 const region1 = String(result[0].address.region_1depth_name);
                 const region2 = String(result[0].address.region_2depth_name);
                 const region3 = String(result[0].address.region_3depth_name);
-                setLocation(address);
+                setAddress(address);
                 setRegion([region1, region2, region3]);
                 // 마커 위치 재설정
                 marker.setMap(null);
@@ -174,7 +175,7 @@ const MapSearch = forwardRef<MapSearchRefType, MapSearchProps>(
               const region1 = result[0].address.region_1depth_name;
               const region2 = result[0].address.region_2depth_name;
               const region3 = result[0].address.region_3depth_name;
-              setLocation(address);
+              setAddress(address);
               setRegion([region1, region2, region3]);
             }
           });
@@ -204,9 +205,12 @@ const MapSearch = forwardRef<MapSearchRefType, MapSearchProps>(
           </button> */}
         </div>
         <div ref={mapRef} className="w-full h-[320px]" />
-        <div>위치 {location}</div>
+        <div>위치 {address}</div>
         <div>
           행정구역 {region[0]} {region[1]}
+        </div>
+        <div>
+          {point} {address} {region[0]} {region[1]}
         </div>
       </div>
     );
