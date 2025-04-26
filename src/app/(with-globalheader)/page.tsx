@@ -7,8 +7,10 @@ import { Suspense } from "react";
 import Image from "next/image";
 import { Course } from "@/types/course";
 import IndexCourseCard from "@/components/indexCourseCard";
+
 export default function Home() {
   const [randomCourse, setRandomCourse] = useState<Course | null>(null);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -24,6 +26,7 @@ export default function Home() {
     };
     fetchData();
   }, []);
+
   return (
     <div>
       <Suspense fallback={<p className="text-center py-5">불러오는 중...</p>}>
@@ -47,6 +50,7 @@ export default function Home() {
               <IndexCourseCard
                 name={String(randomCourse?.name)}
                 distance={Number(randomCourse?.distance)}
+                region={randomCourse?.region ?? ["", "", ""]}
               />
             </div>
           </div>

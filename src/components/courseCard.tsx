@@ -38,7 +38,7 @@ export default function CourseCard({ course }: { course: Course }) {
           <Link className="flex flex-col gap-2" href={`/courses/${course.id}`}>
             <h1 className="font-bold text-lg">{course.name}</h1>
             <div className="flex gap-1 items-center">
-              <Image src={pin_20} alt="location" />
+              <Image src={pin_20} alt="region" />
 
               <h2>{course.region}</h2>
             </div>
