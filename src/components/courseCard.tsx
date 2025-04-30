@@ -39,7 +39,7 @@ export default function CourseCard({ course }: { course: Course }) {
               <Image src={pin_20} alt="region" />
 
               <h2>
-                {course.region[0]}, {course.region[1]}
+                {course.region[1]}, {course.region[0]}
               </h2>
             </div>
           </Link>
