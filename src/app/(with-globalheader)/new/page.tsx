@@ -1,34 +1,44 @@
 // src/app/(with-globalheader)/new/page.tsx
 
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import add_48 from "@/../public/add_48.svg";
 import Image from "next/image";
-import KakaoMaps from "@/components/kakaoMaps";
 import LocationPointInput from "@/components/input/loactionPointInput";
 import CourseInfoInput from "@/components/input/courseInfoInput";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  StringFormat,
+} from "firebase/storage";
 import { storage } from "@/lib/firebase";
 
 export default function Page() {
+  // locationPointInput에서의 point
+  const [point, setPoint] = useState("");
+  // address: 위치에 대한 주소
+  const [address, setAddress] = useState("");
+  // region: 위치에 대한 행정구역 정보
+  const [region, setRegion] = useState<[string, string, string]>(["", "", ""]);
   const [form, setForm] = useState({
     name: "",
     distance: "",
+    region: ["", "", ""],
     slope: 0,
     pavement: 0,
     complexity: 0,
     toilet: null,
     parking: null,
-    image: null as File | null,
-    imageUrl: "",
+    image: [] as File[],
+    imageUrls: [] as string[] | [""],
   });
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
-    const { name, value, type } = e.target;
+    const { name, value } = e.target;
     setForm((prev) => ({
       ...prev,
       [name]: value,
@@ -36,22 +46,34 @@ export default function Page() {
   };
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    console.log(file);
-    if (file) {
-      const storageRef = ref(storage, `course-image-test/${file.name}`);
-      await uploadBytes(storageRef, file);
-      const url = await getDownloadURL(storageRef);
-      // const imageUrl = await URL.createObjectURL(file);
+    const files = e.target.files;
+    if (files && files.length > 0) {
+      const uploadedFiles = Array.from(files);
+      const urls: string[] = [];
+
+      for (const file of uploadedFiles) {
+        const storageRef = ref(storage, `course-image-test/${file.name}`);
+        await uploadBytes(storageRef, file);
+        const url = await getDownloadURL(storageRef);
+        urls.push(url);
+      }
+
       setForm((prev) => ({
         ...prev,
-        image: file,
-        imageUrl: url,
+        image: [...prev.image, ...uploadedFiles],
+        imageUrls: [...prev.imageUrls, ...urls],
       }));
 
       console.log("file uploaded successfully");
     }
   };
+
+  useEffect(() => {
+    setForm((prev) => ({
+      ...prev,
+      region: region,
+    }));
+  }, [region]);
 
   const handleGradientChange = (
     key: "slope" | "pavement" | "complexity",
@@ -91,16 +113,24 @@ export default function Page() {
       setLoading(false);
     }
   };
+
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form
+        onSubmit={handleSubmit}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+          }
+        }}
+      >
         <div className="flex flex-col gap-10">
           <div className="flex flex-col gap-6">
-            <h1 className="text-xl font-bold text-center">
+            <h2 className="text-xl font-bold text-center">
               러닝 코스를 등록해볼까요?
-            </h1>
+            </h2>
             <div className="flex flex-col gap-2">
-              <h2 className="text-xl font-bold">코스명</h2>
+              <h3 className="text-xl font-bold">코스명</h3>
               <input
                 className="w-full h-[50px] border-2 rounded-xl p-4"
                 type="text"
@@ -111,9 +141,9 @@ export default function Page() {
               />
             </div>
             <div className="flex flex-col gap-2">
-              <h2 className="text-xl font-bold">총 거리</h2>
+              <h3 className="text-xl font-bold">총 거리</h3>
               <div className="flex gap-2 items-end">
-                {/* @TODO 거리 숫자값 변경 필요 */}
+                {/* @TODO - 거리 숫자값 변경 필요 */}
                 <input
                   className="w-full h-[50px] border-2 rounded-xl p-4"
                   type="text"
@@ -126,41 +156,48 @@ export default function Page() {
               </div>
             </div>
             <div className="flex flex-col gap-2">
-              <h2 className="text-xl font-bold">이미지를 첨부해주세요.</h2>
-              {/* @TODO - 이미지 첨부 Preview 수정 */}
-              <label className="border-2 rounded-xl w-[140px] h-[140px] cursor-pointer flex">
-                {form.image ? (
-                  <div>
+              <h3 className="text-xl font-bold">이미지를 첨부해주세요.</h3>
+              {/* @TODO - 이미지 첨부 수정 - 최대 3장, 용량 제한 */}
+              <div className="flex gap-2 flex-wrap">
+                {form.imageUrls.map((url, index) => (
+                  <div key={index} className="relative border-2 rounded-xl">
                     <Image
-                      src={form.imageUrl}
-                      alt="preview"
-                      width={400}
-                      height={300}
-                      className="w-full h-full object-cover rounded-xl m-auto"
+                      src={url}
+                      alt={`코스 이미지-${index}`}
+                      width={140}
+                      height={140}
+                      className="w-[140px] h-[140px] object-cover rounded-xl m-auto"
                     />
                   </div>
-                ) : (
+                ))}
+                <label className="border-2 rounded-xl w-[140px] h-[140px] cursor-pointer flex">
                   <Image src={add_48} alt="add image" className="m-auto" />
-                )}
-                <input
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  onChange={handleImageChange}
-                />
-              </label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    className="hidden"
+                    onChange={handleImageChange}
+                  />
+                </label>
+              </div>
               <div className="text-sm text-[#737373]">
                 러닝 기록 캡쳐 사진도 좋아요!
               </div>
             </div>
           </div>
           <div className="flex flex-col gap-6">
-            <h1 className="text-xl font-bold text-center">
+            <h2 className="text-xl font-bold text-center">
               코스의 경로를 입력해주세요.
-            </h1>
-            {/* @TODO - 지도 */}
-            <KakaoMaps />
-            <LocationPointInput />
+            </h2>
+            <LocationPointInput
+              address={address}
+              setAddress={setAddress}
+              region={region}
+              setRegion={setRegion}
+              point={point}
+              setPoint={setPoint}
+            />
           </div>
           <div className="flex flex-col gap-6">
             <CourseInfoInput
@@ -190,3 +227,10 @@ export default function Page() {
     </div>
   );
 }
+
+// 검색한 지도 위치에 대한 행정구역 정보 표시 필요
+
+// mapSearch에는 출발지와 도착지 두 개의 state 분리 - > 임시로 한 개
+// 출발지 검색 -> 찾기 -> 카카오 맵 검색 -> 마커로 위치 선택 -> 출발지의 location, region 저장
+// 도착지 검색 -> 찾기 -> 카카오 맵 검색 -> 마커로 위치 선택 -> 도착지의 location, region 저장
+// 코스 대표 location, region은 출발지 기준으로 저장

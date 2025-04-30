@@ -26,9 +26,10 @@ export default function RootLayout({
       <body
         className={`max-w-[600px] mx-auto my-0 bg-gray-50 h-full font-pretendard`}
       >
+        {/* 스크립트 로딩이 끝나기 전 v3 객체에 접근하면 에러 발생 -> autoload=false 지정 */}
         <Script
           strategy="beforeInteractive"
-          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_API_KEY}&autoload=false`}
+          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_API_KEY}&autoload=false&libraries=services`}
         />
         {children}
       </body>

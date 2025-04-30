@@ -1,13 +1,13 @@
-// src/components/searchResult.tsx
 "use client";
 import { Course } from "@/types/course";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import CourseCard from "@/components/courseCard";
 
-export default function SearchResult() {
+export default function MapSearchResult() {
   const searchParams = useSearchParams();
   const q = searchParams.get("q") || "";
+  
   const [courses, setCourses] = useState<Course[]>([]);
   useEffect(() => {
     const fetchData = async () => {

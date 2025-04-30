@@ -17,7 +17,6 @@ export default function CourseCard({ course }: { course: Course }) {
     setIsBookMarked(!isBookMarked);
   };
 
-  console.log(course.imageUrl);
   return (
     <div className="max-w-[568px] h-[150px] flex rounded-xl overflow-hidden mb-2">
       <Link
@@ -25,7 +24,7 @@ export default function CourseCard({ course }: { course: Course }) {
         href={`/courses/${course.id}`}
       >
         <Image
-          src={course.imageUrl}
+          src={course.imageUrls?.[0]}
           alt="background image"
           style={{ objectFit: "cover" }}
           fill
@@ -37,9 +36,11 @@ export default function CourseCard({ course }: { course: Course }) {
           <Link className="flex flex-col gap-2" href={`/courses/${course.id}`}>
             <h1 className="font-bold text-lg">{course.name}</h1>
             <div className="flex gap-1 items-center">
-              <Image src={pin_20} alt="location" />
+              <Image src={pin_20} alt="region" />
 
-              <h2>{course.location}</h2>
+              <h2>
+                {course.region[0]}, {course.region[1]}
+              </h2>
             </div>
           </Link>
           <button onClick={toggleBookMark}>
