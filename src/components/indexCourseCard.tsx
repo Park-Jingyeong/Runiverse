@@ -1,15 +1,15 @@
 import Image from "next/image";
 import distance_20 from "@/../public/distance_20.svg";
 import pin_20 from "@/../public/pin_20.svg";
-import bar_20 from "@/../public/bar_20.svg";
 import recommend_24 from "@/../public/recommend_24.svg";
 
 interface Props {
   name: string;
   distance: number;
+  region: [string, string, string];
 }
 
-export default function IndexCourseCard({ name, distance }: Props) {
+export default function IndexCourseCard({ name, distance, region }: Props) {
   return (
     <div className="opacity-70 bg-white rounded-xl flex flex-col gap-2 p-6 h-[124px]">
       <h1 className="font-bold text-2xl">{name}</h1>
@@ -26,7 +26,9 @@ export default function IndexCourseCard({ name, distance }: Props) {
         <div className="flex gap-1">
           <Image src={pin_20} alt="region" />
 
-          <div className="text-xl">region</div>
+          <div className="text-xl">
+            {region[1]}, {region[0]}
+          </div>
         </div>
       </div>
     </div>
